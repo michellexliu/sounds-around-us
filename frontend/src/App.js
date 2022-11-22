@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Login from "./pages/Login";
+import Search from "./pages/Search";
 import "./App.css";
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
     console.log(token);
   }, []);
 
-  return <>{token === "" ? <Login /> : <p>{token}</p>}</>;
+  return <>{token === "" ? <Login /> : <Search token={token} />}</>;
 }
 
 export default App;
