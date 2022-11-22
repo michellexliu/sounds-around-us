@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Login from "./pages/Login";
-import Search from "./pages/Search";
+import Login from "./pages/Login/Login";
+import Search from "./pages/Search/Search";
 import "./App.css";
 
 function App() {
