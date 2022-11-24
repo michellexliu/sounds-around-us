@@ -4,8 +4,9 @@ import styles from "./Search.module.css";
 import { fromMS, queryString } from "../../lib/helpers";
 import AuthContext from "../../lib/AuthContext";
 
-function Search() {
+function Search({ setSong, setStep }) {
   const { token, setToken } = useContext(AuthContext);
+  console.log("token", token);
 
   const [q, setQ] = useState("");
   const [res, setRes] = useState([]);
@@ -46,7 +47,7 @@ function Search() {
         Submit
       </button>
       <div className={styles.tracks}>
-        {res?.map(({ album, artists, duration_ms, name }, index) => {
+        {res?.map(({ album, artists, duration_ms, name, id }, index) => {
           const key = `${q} option ${index}`;
           const image = album.images[album.images.length - 1].url;
           const artistStr = artists.map(({ name }) => name).join(", ");
@@ -60,6 +61,11 @@ function Search() {
               duration_ms={duration_ms}
               key={key}
               name={name}
+              onClick={() => {
+                console.log("id", id);
+                setSong(id);
+                setStep("compose");
+              }}
             />
           );
         })}

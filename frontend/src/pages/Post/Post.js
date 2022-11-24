@@ -9,8 +9,18 @@ function Post() {
   const { token, setToken } = useContext(AuthContext);
 
   const [step, setStep] = useState("search");
+  const [post, setPost] = useState(undefined);
+  const [song, setSong] = useState(undefined);
 
-  return <div>{step === "search" ? <Search /> : <Compose />}</div>;
+  return (
+    <div>
+      {step === "search" ? (
+        <Search setSong={setSong} setStep={setStep} />
+      ) : (
+        <Compose setPost={setPost} setStep={setStep} song={song} />
+      )}
+    </div>
+  );
 }
 
 export default Post;

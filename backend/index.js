@@ -101,7 +101,7 @@ app.get("/auth/callback", function (req, res) {
     if (!error && response.statusCode === 200) {
       access_token = body.access_token;
       refresh_token = body.refresh_token;
-      res.redirect("http://localhost:3000/#/post");
+      res.redirect("http://localhost:3000/#/view");
     } else {
       res.send("There was an error during authentication.");
     }
@@ -112,5 +112,28 @@ app.get("/auth/token", (req, res) => {
   res.json({
     access_token: access_token,
     refresh_token: refresh_token,
+  });
+});
+
+app.post("/submit", (req, res) => {
+  console.log(req.body);
+  const { song, message } = req.body;
+  Post.create({
+    track: song,
+    body: message,
+    date: Date.now(),
+  }).then((posts) => {
+    console.log(posts);
+    res.redirect("/#/view");
+  });
+});
+
+app.get("/posts", (req, res) => {
+  Post.find({}, (err, posts) => {
+    if (err) {
+      console.log(err);
+    } else if (posts) {
+      res.json({ posts });
+    }
   });
 });

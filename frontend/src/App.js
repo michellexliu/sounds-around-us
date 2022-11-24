@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login/Login";
 import Post from "./pages/Post/Post";
+import View from "./pages/View/View";
 import AuthContext from "./lib/AuthContext";
 import "./App.css";
 
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Login />} />
         <Route exact path="/post" element={<Post />} />
+        <Route exact path="/view" element={<View />} />
       </Routes>
     </AuthContext.Provider>
   );
