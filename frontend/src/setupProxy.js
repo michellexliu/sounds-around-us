@@ -19,4 +19,10 @@ module.exports = function (app) {
       target: "http://localhost:3001",
     })
   );
+  app.use(
+    "/post",
+    createProxyMiddleware({
+      target: "http://localhost:3001",
+    })
+  );
 };

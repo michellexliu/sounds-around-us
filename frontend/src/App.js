@@ -5,18 +5,14 @@ import Login from "./pages/Login/Login";
 import Post from "./pages/Post/Post";
 import View from "./pages/View/View";
 import AuthContext from "./lib/AuthContext";
+import { refreshToken } from "./lib/helpers";
 import "./App.css";
 
 function App() {
   const [token, setToken] = useState(undefined);
 
   useEffect(() => {
-    async function getToken() {
-      const response = await fetch("/auth/token");
-      const json = await response.json();
-      setToken(json.access_token);
-    }
-
+    const getToken = refreshToken(setToken);
     getToken();
     console.log(token);
   }, []);

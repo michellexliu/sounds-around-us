@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import styles from "./Search.module.css";
 import { fromMS, queryString } from "../../lib/helpers";
 import AuthContext from "../../lib/AuthContext";
-
+import { refreshToken } from "../../lib/helpers";
 function Search({ setSong, setStep }) {
   const { token, setToken } = useContext(AuthContext);
   console.log("token", token);
@@ -14,6 +14,12 @@ function Search({ setSong, setStep }) {
   const headers = new Headers({
     Authorization: "Bearer " + token,
   });
+
+  useEffect(() => {
+    if (!token) {
+      refreshToken(setToken)();
+    }
+  }, []);
 
   async function search(q) {
     const response = await fetch(

@@ -12,3 +12,11 @@ export const queryString = (params) =>
   Object.keys(params)
     .map((key) => key + "=" + params[key])
     .join("&");
+
+export const refreshToken = (setToken) => {
+  return async function getToken() {
+    const response = await fetch("/auth/token");
+    const json = await response.json();
+    setToken(json.access_token);
+  };
+};

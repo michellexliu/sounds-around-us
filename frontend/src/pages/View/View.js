@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 
 import styles from "./View.module.css";
 import AuthContext from "../../lib/AuthContext";
+import { refreshToken } from "../../lib/helpers";
 
 function View() {
-  const { token } = useContext(AuthContext);
+  const { token, setToken } = useContext(AuthContext);
 
-  const [posts, setPosts] = useState(undefined);
+  const [post, setPost] = useState(undefined);
+  const [trackInfo, setTrackInfo] = useState(undefined);
+
   const base = "https://api.spotify.com/v1/tracks";
   const headers = new Headers({
     Authorization: "Bearer " + token,
@@ -22,28 +25,40 @@ function View() {
   }
 
   useEffect(() => {
-    async function getPosts() {
-      const response = await fetch("/posts");
+    if (!token) {
+      refreshToken(setToken)();
+    }
+    async function getPost() {
+      const response = await fetch("/post");
       const json = await response.json();
       console.log(json);
-      setPosts(json?.posts);
+      setPost(json?.result);
     }
 
-    getPosts();
+    getPost();
   }, []);
+
+  useEffect(() => {
+    if (post && post.length > 0) {
+      const { track } = post[0];
+      console.log(track);
+      if (track)
+        getSong(track).then((res) => {
+          setTrackInfo(res);
+          console.log(res);
+        });
+    }
+  }, [post]);
 
   return (
     <div>
       <Link to="/post">Submit your own post</Link>
-      {posts?.map((post) => {
-        if (post.track) getSong(post.track).then((res) => console.log(res));
-        return (
-          <div>
-            <p>{post.body}</p>
-            <p>{post.track}</p>
-          </div>
-        );
-      })}
+      {trackInfo !== undefined ?? (
+        <div>
+          <p>hi</p>
+          <p>{trackInfo.name}</p>
+        </div>
+      )}
     </div>
   );
 }

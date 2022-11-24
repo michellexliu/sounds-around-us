@@ -32,6 +32,14 @@ const generateRandomString = (length) => {
 
 const stateKey = "spotify_auth_state";
 
+const sendRes = (res) => (err, posts) => {
+  if (err) {
+    console.log(err);
+  } else if (posts) {
+    res.json({ result: posts });
+  }
+};
+
 app
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
@@ -128,12 +136,10 @@ app.post("/submit", (req, res) => {
   });
 });
 
+app.get("/post", (req, res) => {
+  Post.aggregate([{ $sample: { size: 1 } }], sendRes(res));
+});
+
 app.get("/posts", (req, res) => {
-  Post.find({}, (err, posts) => {
-    if (err) {
-      console.log(err);
-    } else if (posts) {
-      res.json({ posts });
-    }
-  });
+  Post.find({}, sendRes(res));
 });
