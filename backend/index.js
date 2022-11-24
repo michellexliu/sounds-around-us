@@ -6,6 +6,7 @@ const cors = require("cors");
 const PORT = process.env.PORT || 3001;
 const mongoose = require("mongoose");
 const { URLSearchParams } = require("url");
+
 require("dotenv").config();
 
 const client_id = process.env.CLIENT_ID; // Your client id
@@ -40,6 +41,22 @@ app
 app.listen(PORT, () => {
   console.log("started");
 });
+
+mongoose.connect("mongodb://localhost:27017/songs");
+// mongoose.connect(
+//   `mongodb+srv://admin-michelle:${process.env.DB_PW}@cluster0.07bud.mongodb.net/userDB`,
+//   {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useFindAndModify: false
+//   }
+// );
+const postSchema = new mongoose.Schema({
+  body: String,
+  date: Date,
+  track: String,
+});
+const Post = mongoose.model("Post", postSchema);
 
 app.get("/auth/login", function (req, res) {
   const state = generateRandomString(16);
@@ -84,7 +101,7 @@ app.get("/auth/callback", function (req, res) {
     if (!error && response.statusCode === 200) {
       access_token = body.access_token;
       refresh_token = body.refresh_token;
-      res.redirect("/");
+      res.redirect("http://localhost:3000/#/post");
     } else {
       res.send("There was an error during authentication.");
     }
