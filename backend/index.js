@@ -15,7 +15,8 @@ const scope = "user-read-private user-read-email user-top-read";
 const redirect_uri =
   process.env.redirect_uri || `http://localhost:${PORT}/auth/callback`;
 
-let access_token = "";
+let access_token = undefined;
+let refresh_token = undefined;
 
 const generateRandomString = (length) => {
   let text = "";
@@ -62,43 +63,37 @@ app.get("/auth/callback", function (req, res) {
   const state = req.query.state || null;
   const storedState = req.cookies ? req.cookies[stateKey] : null;
 
-  if (state === null || state !== storedState) {
-    res.redirect(
-      "/#" +
-        new URLSearchParams({
-          error: "state_mismatch",
-        })
-    );
-  } else {
-    res.clearCookie(stateKey);
-    const authOptions = {
-      url: "https://accounts.spotify.com/api/token",
-      form: {
-        code,
-        redirect_uri,
-        grant_type: "authorization_code",
-      },
-      headers: {
-        Authorization:
-          "Basic " +
-          new Buffer.from(client_id + ":" + client_secret).toString("base64"),
-      },
-      json: true,
-    };
+  res.clearCookie(stateKey);
+  const authOptions = {
+    url: "https://accounts.spotify.com/api/token",
+    form: {
+      code,
+      redirect_uri,
+      grant_type: "authorization_code",
+    },
+    headers: {
+      Authorization:
+        "Basic " +
+        Buffer.from(client_id + ":" + client_secret).toString("base64"),
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    json: true,
+  };
 
-    request.post(authOptions, (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-        access_token = body.access_token;
-        res.redirect("/auth/token");
-      } else {
-        res.send("There was an error during authentication.");
-      }
-    });
-  }
+  request.post(authOptions, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      access_token = body.access_token;
+      refresh_token = body.refresh_token;
+      res.redirect("/");
+    } else {
+      res.send("There was an error during authentication.");
+    }
+  });
 });
 
 app.get("/auth/token", (req, res) => {
   res.json({
     access_token: access_token,
+    refresh_token: refresh_token,
   });
 });

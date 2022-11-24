@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import styles from "./Search.module.css";
 import { fromMS } from "../../lib/helpers";
+import AuthContext from "../../lib/AuthContext";
 
-function Search({ token }) {
+function Search() {
+  const { token, setToken } = useContext(AuthContext);
+
   const [q, setQ] = useState("");
   const [res, setRes] = useState([]);
   const base = "https://api.spotify.com/v1/search";
@@ -50,7 +53,7 @@ function Search({ token }) {
       <div className={styles.tracks}>
         {res?.map(({ album, artists, duration_ms, name }, index) => {
           const key = `${q} option ${index}`;
-          const image = album.images[0].url;
+          const image = album.images[album.images.length - 1].url;
           const artistStr = artists.map(({ name }) => name).join(", ");
           const albumName = album.name;
 
