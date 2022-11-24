@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+
 import Login from "./pages/Login/Login";
-import Search from "./pages/Search/Search";
+import Post from "./pages/Post/Post";
 import AuthContext from "./lib/AuthContext";
 import "./App.css";
 
@@ -20,7 +22,10 @@ function App() {
 
   return (
     <AuthContext.Provider value={{ token, setToken }}>
-      {token && token !== "" ? <Search /> : <Login />}
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+        <Route exact path="/post" element={<Post />} />
+      </Routes>
     </AuthContext.Provider>
   );
 }

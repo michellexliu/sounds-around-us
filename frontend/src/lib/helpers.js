@@ -8,3 +8,7 @@ export const fromMS = (ms) => {
   const formatted = parts.map((s) => String(s).padStart(2, "0")).join(":");
   return formatted;
 };
+export const queryString = (params) =>
+  Object.keys(params)
+    .map((key) => key + "=" + params[key])
+    .join("&");

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 
 import styles from "./Search.module.css";
-import { fromMS } from "../../lib/helpers";
+import { fromMS, queryString } from "../../lib/helpers";
 import AuthContext from "../../lib/AuthContext";
 
 function Search() {
@@ -13,11 +13,6 @@ function Search() {
   const headers = new Headers({
     Authorization: "Bearer " + token,
   });
-
-  const queryString = (params) =>
-    Object.keys(params)
-      .map((key) => key + "=" + params[key])
-      .join("&");
 
   async function search(q) {
     const response = await fetch(
