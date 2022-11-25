@@ -27,6 +27,15 @@ function WebPlayback({ track, player, play }) {
     });
   }, []);
 
+  useEffect(() => {
+    console.log(current_track);
+    setTrack(track);
+    play({
+      playerInstance: player,
+      spotify_uri: track.uri,
+    });
+  }, [track]);
+
   return (
     <>
       <div className="container">
@@ -34,7 +43,7 @@ function WebPlayback({ track, player, play }) {
           <img
             src={current_track.album.images[0].url}
             className="now-playing__cover"
-            alt=""
+            alt={`${current_track.name} album cover`}
           />
 
           <div className="now-playing__side">
@@ -47,29 +56,11 @@ function WebPlayback({ track, player, play }) {
           <button
             className="btn-spotify"
             onClick={() => {
-              player.previousTrack();
-            }}
-          >
-            &lt;&lt;
-          </button>
-
-          <button
-            className="btn-spotify"
-            onClick={() => {
               player.togglePlay();
               setPaused(!is_paused);
             }}
           >
             {is_paused ? "PLAY" : "PAUSE"}
-          </button>
-
-          <button
-            className="btn-spotify"
-            onClick={() => {
-              player.nextTrack();
-            }}
-          >
-            &gt;&gt;
           </button>
         </div>
       </div>
