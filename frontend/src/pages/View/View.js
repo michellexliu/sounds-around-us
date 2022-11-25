@@ -17,7 +17,7 @@ function View({ playbackReady, setPlaybackReady }) {
   const [player, setPlayer] = useState(undefined);
   const [deviceID, setDeviceID] = useState(undefined);
   const [currentTrack, setCurrentTrack] = useState(trackInfo);
-
+  const [autoplayFailed, setAutoplayFailed] = useState(false);
   const getToken = () => refreshToken(setToken);
 
   const base = "https://api.spotify.com/v1/tracks";
@@ -133,6 +133,7 @@ function View({ playbackReady, setPlaybackReady }) {
           Volume on. Click the story text area to load a new song and story.
           Click the vinyl to pause and unpause the song.
         </p>
+        {autoplayFailed === true ? <p>Click the vinyl to begin.</p> : <></>}
       </div>
       {trackInfo && player && deviceID ? (
         <div className={styles.player}>
@@ -142,6 +143,7 @@ function View({ playbackReady, setPlaybackReady }) {
             play={play}
             currentTrack={currentTrack}
             setCurrentTrack={setCurrentTrack}
+            setAutoplayFailed={setAutoplayFailed}
           />
           <p className={styles.body} onClick={getNewPost}>
             {body}
