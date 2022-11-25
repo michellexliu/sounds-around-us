@@ -1,11 +1,22 @@
 /* source: https://codepen.io/marcruecker/pen/mBJVBX */
-/* .wrap {
-  position: absolute;
-  left: -13.5%;
-  top: 50%;
-  transform: translateY(-50%);
-} */
+.wrap {
+  z-index: 2;
+}
 
+.toggle {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  z-index: 1000;
+  font-size: 2.5em;
+  font-family: "Helvetica";
+  font-weight: 600;
+}
+
+.overlay,
 .vinyl {
   z-index: 0;
   width: 400px;
@@ -17,7 +28,26 @@
   box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   content: "";
+}
+
+.overlay {
+  z-index: 1000;
+  display: none;
+  background-color: rgba(0, 0, 0, 1);
+}
+
+.vinyl:hover .overlay {
+  display: flex;
+}
+.vinyl:hover .print {
+  opacity: 40%;
+}
+
+.vinyl {
   animation: 12s linear spinThat infinite;
+}
+.vinyl:hover {
+  cursor: pointer;
 }
 .vinyl::before {
   position: absolute;
@@ -42,6 +72,7 @@
   box-shadow: inset 0 0 0 5px rgba(150, 150, 150, 0.5);
   background-size: cover;
   border-radius: 50%;
+  z-index: 3;
 }
 @keyframes spinThat {
   0% {

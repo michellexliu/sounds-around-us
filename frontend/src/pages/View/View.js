@@ -129,7 +129,7 @@ function View({ playbackReady, setPlaybackReady }) {
         {currentTrack?.name} - {currentTrack?.artists[0].name}
       </h1>
       {trackInfo && player && deviceID ? (
-        <div className={styles.player} onClick={getNewPost}>
+        <div className={styles.player}>
           <WebPlayback
             track={trackInfo}
             player={player}
@@ -137,7 +137,9 @@ function View({ playbackReady, setPlaybackReady }) {
             currentTrack={currentTrack}
             setCurrentTrack={setCurrentTrack}
           />
-          <p>{body}</p>
+          <p className={styles.body} onClick={getNewPost}>
+            {body}
+          </p>
         </div>
       ) : (
         <></>

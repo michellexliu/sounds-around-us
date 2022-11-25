@@ -45,7 +45,13 @@ function WebPlayback({ track, player, play, currentTrack, setCurrentTrack }) {
           className={styles.cover}
           alt={`${currentTrack?.name} album cover`}
         /> */}
-        <div className={styles.wrap}>
+        <div
+          className={styles.wrap}
+          onClick={() => {
+            player.togglePlay();
+            setPaused(!is_paused);
+          }}
+        >
           <div className={styles.album}>
             <div className={styles.vinyl}>
               <div
@@ -54,6 +60,9 @@ function WebPlayback({ track, player, play, currentTrack, setCurrentTrack }) {
                   backgroundImage: `url(${currentTrack?.album?.images[0].url})`,
                 }}
               ></div>
+              <div className={styles.overlay}>
+                <p className={styles.toggle}>{is_paused ? "PLAY" : "PAUSE"}</p>
+              </div>
             </div>
           </div>
         </div>
