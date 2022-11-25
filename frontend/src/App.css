@@ -5,4 +5,13 @@
   justify-content: center;
   align-content: center;
   align-items: center;
+  overflow: auto;
+}
+
+.btn {
+  background-color: #000;
+  color: white;
+  text-decoration: none;
+  padding: 1vh 1.5vw;
+  border-radius: 10px;
 }
