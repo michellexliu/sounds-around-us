@@ -9,8 +9,9 @@ function WebPlayback({
   currentTrack,
   setCurrentTrack,
   setAutoplayFailed,
+  is_paused,
+  setPaused,
 }) {
-  const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
 
   useEffect(() => {

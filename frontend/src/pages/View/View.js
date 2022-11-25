@@ -18,6 +18,8 @@ function View({ playbackReady, setPlaybackReady }) {
   const [deviceID, setDeviceID] = useState(undefined);
   const [currentTrack, setCurrentTrack] = useState(trackInfo);
   const [autoplayFailed, setAutoplayFailed] = useState(false);
+  const [is_paused, setPaused] = useState(false);
+
   const getToken = () => refreshToken(setToken);
 
   const base = "https://api.spotify.com/v1/tracks";
@@ -144,6 +146,8 @@ function View({ playbackReady, setPlaybackReady }) {
             currentTrack={currentTrack}
             setCurrentTrack={setCurrentTrack}
             setAutoplayFailed={setAutoplayFailed}
+            is_paused={is_paused}
+            setPaused={setPaused}
           />
           <p className={styles.body} onClick={getNewPost}>
             {body}
@@ -152,7 +156,16 @@ function View({ playbackReady, setPlaybackReady }) {
       ) : (
         <></>
       )}
-      <Link to="/post" className={cn("btn", styles.submit)}>
+      <Link
+        to="/post"
+        className={cn("btn", styles.submit)}
+        onClick={() => {
+          if (!is_paused && player) {
+            player.togglePlay();
+            setPaused(!is_paused);
+          }
+        }}
+      >
         Submit your own song
       </Link>
     </div>
