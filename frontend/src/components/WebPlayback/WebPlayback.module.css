@@ -1,8 +1,15 @@
 /* source: https://codepen.io/marcruecker/pen/mBJVBX */
+/* .wrap {
+  position: absolute;
+  left: -13.5%;
+  top: 50%;
+  transform: translateY(-50%);
+} */
+
 .vinyl {
   z-index: 0;
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   display: block;
   background-color: rgba(0, 0, 0, 0.9);
   background-size: 106% 106%;
@@ -10,7 +17,7 @@
   box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   content: "";
-  animation: 8s linear spinThat infinite;
+  animation: 12s linear spinThat infinite;
 }
 .vinyl::before {
   position: absolute;

@@ -1,11 +1,38 @@
+.container h1 {
+  text-align: center;
+  padding: 2vh 0;
+  font-family: "Helvetica Neue";
+  font-weight: 600;
+}
+
 .player,
 .container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 80%;
+}
+
+.player {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.player p {
+  padding-left: 4vw;
+  font-size: 2.5em;
+  font-family: "Times New Roman";
+  width: 100%;
+  white-space: pre-line;
+  height: 60vh;
+  overflow: auto;
 }
 
 .container {
+  width: 80%;
+  height: 100vh;
+  justify-content: space-between;
   flex-direction: column;
+}
+
+.submit {
+  margin-bottom: 2vh;
 }

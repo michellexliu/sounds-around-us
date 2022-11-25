@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactAudioPlayer from "react-audio-player";
+import cn from "classnames";
 
 import styles from "./View.module.css";
 import AuthContext from "../../lib/AuthContext";
@@ -15,6 +16,7 @@ function View({ playbackReady, setPlaybackReady }) {
   const [trackInfo, setTrackInfo] = useState(undefined);
   const [player, setPlayer] = useState(undefined);
   const [deviceID, setDeviceID] = useState(undefined);
+  const [currentTrack, setCurrentTrack] = useState(trackInfo);
 
   const getToken = () => refreshToken(setToken);
 
@@ -107,6 +109,7 @@ function View({ playbackReady, setPlaybackReady }) {
       if (track)
         getSong(track).then((res) => {
           setTrackInfo(res);
+          setCurrentTrack(res);
           console.log(res);
         });
     }
@@ -122,15 +125,24 @@ function View({ playbackReady, setPlaybackReady }) {
       ) : (
         <></>
       )} */}
+      <h1>
+        {currentTrack?.name} - {currentTrack?.artists[0].name}
+      </h1>
       {trackInfo && player && deviceID ? (
         <div className={styles.player} onClick={getNewPost}>
-          <WebPlayback track={trackInfo} player={player} play={play} />
+          <WebPlayback
+            track={trackInfo}
+            player={player}
+            play={play}
+            currentTrack={currentTrack}
+            setCurrentTrack={setCurrentTrack}
+          />
           <p>{body}</p>
         </div>
       ) : (
         <></>
       )}
-      <Link to="/post" className="btn">
+      <Link to="/post" className={cn("btn", styles.submit)}>
         Submit your own song
       </Link>
     </div>

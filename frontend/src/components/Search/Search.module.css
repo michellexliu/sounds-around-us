@@ -8,6 +8,11 @@
   flex-direction: column;
 }
 
+.tracks {
+  height: 50vh;
+  overflow: auto;
+}
+
 p {
   margin: 0;
 }

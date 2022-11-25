@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import styles from "./WebPlayback.module.css";
 
-function WebPlayback({ track, player, play }) {
+function WebPlayback({ track, player, play, currentTrack, setCurrentTrack }) {
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
-  const [current_track, setTrack] = useState(track);
 
   useEffect(() => {
     player.addListener("autoplay_failed", () => {
@@ -16,7 +15,7 @@ function WebPlayback({ track, player, play }) {
         return;
       }
 
-      setTrack(state.track_window.current_track);
+      setCurrentTrack(state.track_window.current_track);
       setPaused(state.paused);
       player.activateElement();
       player.getCurrentState().then((state) => {
@@ -25,13 +24,13 @@ function WebPlayback({ track, player, play }) {
     });
     play({
       playerInstance: player,
-      spotify_uri: current_track.uri,
+      spotify_uri: currentTrack?.uri,
     });
   }, []);
 
   useEffect(() => {
-    console.log(current_track);
-    setTrack(track);
+    console.log(currentTrack);
+    setCurrentTrack(track);
     play({
       playerInstance: player,
       spotify_uri: track.uri,
@@ -42,9 +41,9 @@ function WebPlayback({ track, player, play }) {
     <div className={styles.container}>
       <div className="main-wrapper">
         {/* <img
-          src={current_track?.album?.images[0].url}
+          src={currentTrack?.album?.images[0].url}
           className={styles.cover}
-          alt={`${current_track?.name} album cover`}
+          alt={`${currentTrack?.name} album cover`}
         /> */}
         <div className={styles.wrap}>
           <div className={styles.album}>
@@ -52,21 +51,13 @@ function WebPlayback({ track, player, play }) {
               <div
                 className={styles.print}
                 style={{
-                  backgroundImage: `url(${current_track?.album?.images[0].url})`,
+                  backgroundImage: `url(${currentTrack?.album?.images[0].url})`,
                 }}
               ></div>
             </div>
           </div>
         </div>
-
-        <div className="now-playing__side">
-          <div className="now-playing__name">{current_track?.name}</div>
-
-          <div className="now-playing__artist">
-            {current_track?.artists[0].name}
-          </div>
-        </div>
-        <button
+        {/* <button
           className="btn-spotify"
           onClick={() => {
             player.togglePlay();
@@ -74,7 +65,7 @@ function WebPlayback({ track, player, play }) {
           }}
         >
           {is_paused ? "PLAY" : "PAUSE"}
-        </button>
+        </button> */}
       </div>
     </div>
   );

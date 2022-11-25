@@ -12,7 +12,7 @@ require("dotenv").config();
 const client_id = process.env.CLIENT_ID; // Your client id
 const client_secret = process.env.CLIENT_SECRET; // Your client id
 console.log(client_id);
-const scope = "user-read-private user-read-email user-top-read";
+const scope = "streaming user-read-private user-read-email user-top-read";
 const redirect_uri =
   process.env.redirect_uri || `http://localhost:${PORT}/auth/callback`;
 
@@ -117,6 +117,7 @@ app.get("/auth/callback", function (req, res) {
 });
 
 app.get("/auth/token", (req, res) => {
+  console.log(access_token);
   res.json({
     access_token: access_token,
     refresh_token: refresh_token,
