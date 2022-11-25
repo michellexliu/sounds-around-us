@@ -13,6 +13,8 @@ function View() {
   const [post, setPost] = useState(undefined);
   const [trackInfo, setTrackInfo] = useState(undefined);
   const [player, setPlayer] = useState(undefined);
+  const [deviceID, setDeviceID] = useState(undefined);
+  const [playbackReady, setPlaybackReady] = useState(false);
 
   const getToken = () => refreshToken(setToken);
 
@@ -47,34 +49,53 @@ function View() {
     getNewPost();
   }, []);
 
+  const play = ({
+    spotify_uri,
+    playerInstance: {
+      _options: { getOAuthToken },
+    },
+  }) => {
+    getOAuthToken((access_token) => {
+      fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceID}`, {
+        method: "PUT",
+        body: JSON.stringify({ uris: [spotify_uri] }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+    });
+  };
+
   useEffect(() => {
     if (!token) {
       getToken();
       window.onSpotifyWebPlaybackSDKReady = () => {
-        console.log("not set yet");
+        setPlaybackReady(true);
       };
     } else {
-      console.log("token set", token);
-      console.log("ready", token);
-      const player = new window.Spotify.Player({
-        name: "Web Playback SDK",
-        getOAuthToken: (cb) => {
-          cb(token);
-        },
-        volume: 0.5,
-      });
+      if (playbackReady) {
+        const player = new window.Spotify.Player({
+          name: "Web Playback SDK",
+          getOAuthToken: (cb) => {
+            cb(token);
+          },
+          volume: 0.5,
+        });
 
-      setPlayer(player);
+        setPlayer(player);
 
-      player.addListener("ready", ({ device_id }) => {
-        console.log("Ready with Device ID", device_id);
-      });
+        player.addListener("ready", ({ device_id }) => {
+          console.log("Ready with Device ID", device_id);
+          setDeviceID(device_id);
+        });
 
-      player.addListener("not_ready", ({ device_id }) => {
-        console.log("Device ID has gone offline", device_id);
-      });
+        player.addListener("not_ready", ({ device_id }) => {
+          console.log("Device ID has gone offline", device_id);
+        });
 
-      player.connect();
+        player.connect();
+      }
     }
   }, [token]);
 
@@ -101,8 +122,8 @@ function View() {
       ) : (
         <></>
       )} */}
-      {trackInfo && player ? (
-        <WebPlayback track={trackInfo} player={player} />
+      {trackInfo && player && deviceID ? (
+        <WebPlayback track={trackInfo} player={player} play={play} />
       ) : (
         <></>
       )}

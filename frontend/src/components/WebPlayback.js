@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-function WebPlayback({ track, player }) {
+function WebPlayback({ track, player, play }) {
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
   const [current_track, setTrack] = useState(track);
-  console.log("webplayback", track, player);
 
   useEffect(() => {
+    player.addListener("autoplay_failed", () => {
+      console.log("Autoplay is not allowed by the browser autoplay rules");
+    });
     player.addListener("player_state_changed", (state) => {
       if (!state) {
         return;
@@ -14,10 +16,14 @@ function WebPlayback({ track, player }) {
 
       setTrack(state.track_window.current_track);
       setPaused(state.paused);
-
+      player.activateElement();
       player.getCurrentState().then((state) => {
         !state ? setActive(false) : setActive(true);
       });
+    });
+    play({
+      playerInstance: player,
+      spotify_uri: current_track.uri,
     });
   }, []);
 
