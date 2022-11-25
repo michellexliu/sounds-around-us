@@ -13,7 +13,7 @@ function Post() {
   const [song, setSong] = useState(undefined);
 
   return (
-    <div>
+    <div className={styles.container}>
       {step === "search" ? (
         <Search setSong={setSong} setStep={setStep} />
       ) : (

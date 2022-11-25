@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import cn from "classnames";
 
 import styles from "./Search.module.css";
 import { fromMS, queryString } from "../../lib/helpers";
@@ -45,36 +46,51 @@ function Search({ setSong, setStep }) {
   };
 
   return (
-    <div>
-      <label htmlFor="track">Search</label>
-      <input id="track" type="text" onChange={handleChange} value={q} />
+    <div className={styles.container}>
+      <label className={styles.searchPrompt} htmlFor="track">
+        What's a song that means something to you?
+      </label>
+      <div className={styles.searchContainer}>
+        <input
+          id="track"
+          className={styles.search}
+          type="text"
+          onChange={handleChange}
+          value={q}
+        />
+        <button
+          onClick={handleSubmit}
+          disabled={q === ""}
+          className={cn(styles.submit, "btn")}
+        >
+          Search
+        </button>
+      </div>
+      <div className={styles.tracksContainer}>
+        <table className={styles.tracks}>
+          {res?.map(({ album, artists, duration_ms, name, id }, index) => {
+            const key = `${q} option ${index}`;
+            const image = album.images[album.images.length - 1].url;
+            const artistStr = artists.map(({ name }) => name).join(", ");
+            const albumName = album.name;
 
-      <button onClick={handleSubmit} disabled={q === ""}>
-        Submit
-      </button>
-      <div className={styles.tracks}>
-        {res?.map(({ album, artists, duration_ms, name, id }, index) => {
-          const key = `${q} option ${index}`;
-          const image = album.images[album.images.length - 1].url;
-          const artistStr = artists.map(({ name }) => name).join(", ");
-          const albumName = album.name;
-
-          return (
-            <Track
-              image={image}
-              artists={artistStr}
-              album={albumName}
-              duration_ms={duration_ms}
-              key={key}
-              name={name}
-              onClick={() => {
-                console.log("id", id);
-                setSong(id);
-                setStep("compose");
-              }}
-            />
-          );
-        })}
+            return (
+              <Track
+                image={image}
+                artists={artistStr}
+                album={albumName}
+                duration_ms={duration_ms}
+                key={key}
+                name={name}
+                onClick={() => {
+                  console.log("id", id);
+                  setSong(id);
+                  setStep("compose");
+                }}
+              />
+            );
+          })}
+        </table>
       </div>
     </div>
   );
@@ -82,15 +98,17 @@ function Search({ setSong, setStep }) {
 
 function Track({ image, artists, name, album, duration_ms, onClick }) {
   return (
-    <div className={styles.track} onClick={onClick}>
-      <img src={image} alt={`${name} by ${artists} album cover`} width={50} />
-      <div className={styles.trackInfo}>
-        <p>{name}</p>
+    <tr className={styles.track} onClick={onClick}>
+      <td>
+        <img src={image} alt={`${name} by ${artists} album cover`} width={50} />
+      </td>
+      <td className={styles.trackInfo}>
+        <p className={styles.trackTitle}>{name}</p>
         <p>{artists}</p>
-      </div>
-      <p>{album}</p>
-      <p>{fromMS(duration_ms)}</p>
-    </div>
+      </td>
+      <td>{album}</td>
+      <td>{fromMS(duration_ms)}</td>
+    </tr>
   );
 }
 
