@@ -41,16 +41,17 @@ function WebPlayback({ track, player, play }) {
       <div className="container">
         <div className="main-wrapper">
           <img
-            src={current_track.album.images[0].url}
+            src={current_track?.album?.images[0].url}
             className="now-playing__cover"
-            alt={`${current_track.name} album cover`}
+            alt={`${current_track?.name} album cover`}
+            width={200}
           />
 
           <div className="now-playing__side">
-            <div className="now-playing__name">{current_track.name}</div>
+            <div className="now-playing__name">{current_track?.name}</div>
 
             <div className="now-playing__artist">
-              {current_track.artists[0].name}
+              {current_track?.artists[0].name}
             </div>
           </div>
           <button

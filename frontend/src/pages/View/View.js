@@ -7,14 +7,13 @@ import AuthContext from "../../lib/AuthContext";
 import { refreshToken } from "../../lib/helpers";
 import WebPlayback from "../../components/WebPlayback";
 
-function View() {
+function View({ playbackReady, setPlaybackReady }) {
   const { token, setToken } = useContext(AuthContext);
 
   const [post, setPost] = useState(undefined);
   const [trackInfo, setTrackInfo] = useState(undefined);
   const [player, setPlayer] = useState(undefined);
   const [deviceID, setDeviceID] = useState(undefined);
-  const [playbackReady, setPlaybackReady] = useState(false);
 
   const getToken = () => refreshToken(setToken);
 

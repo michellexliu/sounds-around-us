@@ -10,6 +10,7 @@ import "./App.css";
 
 function App() {
   const [token, setToken] = useState(undefined);
+  const [playbackReady, setPlaybackReady] = useState(false);
 
   useEffect(() => {
     const getToken = refreshToken(setToken);
@@ -18,13 +19,24 @@ function App() {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
-      <Routes>
-        <Route exact path="/" element={<Login />} />
-        <Route exact path="/post" element={<Post />} />
-        <Route exact path="/view" element={<View />} />
-      </Routes>
-    </AuthContext.Provider>
+    <div className="container">
+      <AuthContext.Provider value={{ token, setToken }}>
+        <Routes>
+          <Route exact path="/" element={<Login />} />
+          <Route exact path="/post" element={<Post />} />
+          <Route
+            exact
+            path="/view"
+            element={
+              <View
+                playbackReady={playbackReady}
+                setPlaybackReady={setPlaybackReady}
+              />
+            }
+          />
+        </Routes>
+      </AuthContext.Provider>
+    </div>
   );
 }
 
