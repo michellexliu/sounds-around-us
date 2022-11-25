@@ -16,6 +16,8 @@ function Login() {
             2000,
             "heartbreak",
             2000,
+            "hope",
+            2000,
             "grief",
             2000,
             "joy",

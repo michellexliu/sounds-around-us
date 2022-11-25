@@ -5,12 +5,13 @@ import ReactAudioPlayer from "react-audio-player";
 import styles from "./View.module.css";
 import AuthContext from "../../lib/AuthContext";
 import { refreshToken } from "../../lib/helpers";
-import WebPlayback from "../../components/WebPlayback";
+import WebPlayback from "../../components/WebPlayback/WebPlayback";
 
 function View({ playbackReady, setPlaybackReady }) {
   const { token, setToken } = useContext(AuthContext);
 
   const [post, setPost] = useState(undefined);
+  const [body, setBody] = useState(undefined);
   const [trackInfo, setTrackInfo] = useState(undefined);
   const [player, setPlayer] = useState(undefined);
   const [deviceID, setDeviceID] = useState(undefined);
@@ -100,7 +101,8 @@ function View({ playbackReady, setPlaybackReady }) {
 
   useEffect(() => {
     if (post && post.length > 0) {
-      const { track } = post[0];
+      const { track, body } = post[0];
+      setBody(body);
       console.log(track);
       if (track)
         getSong(track).then((res) => {
@@ -111,8 +113,7 @@ function View({ playbackReady, setPlaybackReady }) {
   }, [post]);
 
   return (
-    <div onClick={getNewPost}>
-      <Link to="/post">Submit your own post</Link>
+    <div className={styles.container}>
       {/* {trackInfo ? (
         <div>
           <p>{trackInfo.name}</p>
@@ -122,10 +123,16 @@ function View({ playbackReady, setPlaybackReady }) {
         <></>
       )} */}
       {trackInfo && player && deviceID ? (
-        <WebPlayback track={trackInfo} player={player} play={play} />
+        <div className={styles.player} onClick={getNewPost}>
+          <WebPlayback track={trackInfo} player={player} play={play} />
+          <p>{body}</p>
+        </div>
       ) : (
         <></>
       )}
+      <Link to="/post" className="btn">
+        Submit your own song
+      </Link>
     </div>
   );
 }
