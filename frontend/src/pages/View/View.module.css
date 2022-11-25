@@ -1,8 +1,16 @@
 .container h1 {
   text-align: center;
-  padding: 2vh 0;
+  padding-top: 2vh;
   font-family: "Helvetica Neue";
   font-weight: 600;
+}
+
+.text {
+  text-align: center;
+}
+
+.text p {
+  opacity: 55%;
 }
 
 .player,
@@ -24,6 +32,10 @@
   white-space: pre-line;
   height: 60vh;
   overflow: auto;
+}
+
+.body:hover {
+  cursor: pointer;
 }
 
 .container {

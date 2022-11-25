@@ -125,9 +125,15 @@ function View({ playbackReady, setPlaybackReady }) {
       ) : (
         <></>
       )} */}
-      <h1>
-        {currentTrack?.name} - {currentTrack?.artists[0].name}
-      </h1>
+      <div className={styles.text}>
+        <h1>
+          {currentTrack?.name} - {currentTrack?.artists[0].name}
+        </h1>
+        <p>
+          Volume on. Click the story text area to load a new song and story.
+          Click the vinyl to pause and unpause the song.
+        </p>
+      </div>
       {trackInfo && player && deviceID ? (
         <div className={styles.player}>
           <WebPlayback
