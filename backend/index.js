@@ -15,6 +15,8 @@ console.log(client_id);
 const scope = "streaming user-read-private user-read-email user-top-read";
 const redirect_uri =
   process.env.REDIRECT_URI || `http://localhost:${PORT}/auth/callback`;
+const frontend_redirect =
+  process.env.FRONTEND_REDIRECT || "http://localhost:3000";
 
 let access_token = undefined;
 let refresh_token = undefined;
@@ -104,7 +106,7 @@ app.get("/auth/callback", function (req, res) {
     if (!error && response.statusCode === 200) {
       access_token = body.access_token;
       refresh_token = body.refresh_token;
-      res.redirect("http://localhost:3000/#/view");
+      res.redirect(`${frontend_redirect}/#/view`);
     } else {
       res.send("There was an error during authentication.");
     }
@@ -128,7 +130,7 @@ app.post("/submit", (req, res) => {
     date: Date.now(),
   }).then((posts) => {
     console.log(posts);
-    res.redirect("/#/view");
+    res.redirect(`${frontend_redirect}/#/view`);
   });
 });
 
