@@ -33,3 +33,12 @@ textarea {
 textarea:focus {
   outline: none;
 }
+
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+  .prompt {
+    font-size: 1.75em;
+  }
+}

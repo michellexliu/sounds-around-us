@@ -10,3 +10,9 @@
   color: rgb(73, 71, 71);
   padding-top: 2vh;
 }
+
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+}
