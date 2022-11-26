@@ -70,8 +70,9 @@
   }
   .container * {
     margin-bottom: 2vh;
+  }
+  .container {
     height: auto;
-    min-height: 100vh;
   }
   .body {
     height: auto;
