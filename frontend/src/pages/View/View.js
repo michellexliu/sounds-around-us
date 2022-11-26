@@ -20,7 +20,7 @@ function View({ playbackReady, setPlaybackReady }) {
   const [currentTrack, setCurrentTrack] = useState(trackInfo);
   const [autoplayFailed, setAutoplayFailed] = useState(false);
   const [is_paused, setPaused] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
+  const [clickCount, setClickCount] = useState(true);
 
   const getToken = () => refreshToken(setToken);
 
@@ -38,6 +38,7 @@ function View({ playbackReady, setPlaybackReady }) {
   }
 
   const getNewPost = () => {
+    setClickCount(clickCount + 1);
     if (!token) {
       getToken();
     }
@@ -123,7 +124,7 @@ function View({ playbackReady, setPlaybackReady }) {
         animate="visible"
         exit="hidden"
         className={styles.container}
-        key={trackInfo ? trackInfo.name : ""}
+        key={clickCount}
       >
         {currentTrack && currentTrack.artists ? (
           <motion.div
