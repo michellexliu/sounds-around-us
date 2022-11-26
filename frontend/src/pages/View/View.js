@@ -77,28 +77,26 @@ function View({ playbackReady, setPlaybackReady }) {
     if (!token) {
       getToken();
     } else {
-      if (playbackReady) {
-        const player = new window.Spotify.Player({
-          name: "Web Playback SDK",
-          getOAuthToken: (cb) => {
-            cb(token);
-          },
-          volume: 0.5,
-        });
+      const player = new window.Spotify.Player({
+        name: "Web Playback SDK",
+        getOAuthToken: (cb) => {
+          cb(token);
+        },
+        volume: 0.5,
+      });
 
-        setPlayer(player);
+      setPlayer(player);
 
-        player.addListener("ready", ({ device_id }) => {
-          console.log("Ready with Device ID", device_id);
-          setDeviceID(device_id);
-        });
+      player.addListener("ready", ({ device_id }) => {
+        console.log("Ready with Device ID", device_id);
+        setDeviceID(device_id);
+      });
 
-        player.addListener("not_ready", ({ device_id }) => {
-          console.log("Device ID has gone offline", device_id);
-        });
+      player.addListener("not_ready", ({ device_id }) => {
+        console.log("Device ID has gone offline", device_id);
+      });
 
-        player.connect();
-      }
+      player.connect();
     }
   }, [token]);
 
