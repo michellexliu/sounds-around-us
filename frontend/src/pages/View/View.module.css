@@ -58,3 +58,22 @@
 .back {
   margin-top: 2vh;
 }
+
+@media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
+  .player {
+    order: 1;
+    flex-direction: column;
+    text-align: center;
+  }
+  .container * {
+    margin-bottom: 2vh;
+  }
+  .body {
+    height: auto;
+    padding-left: 0;
+    font-size: 1.75em;
+  }
+}
