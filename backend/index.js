@@ -12,7 +12,7 @@ require("dotenv").config();
 const client_id = process.env.CLIENT_ID; // Your client id
 const client_secret = process.env.CLIENT_SECRET; // Your client id
 console.log(client_id);
-const scope = "streaming user-read-private user-read-email user-top-read";
+const scope = "streaming user-read-private user-read-email";
 const redirect_uri =
   process.env.REDIRECT_URI || `http://localhost:${PORT}/auth/callback`;
 const frontend_redirect =
