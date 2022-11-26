@@ -36,4 +36,8 @@ input[type="submit"] {
   .btn {
     padding: 1vh 3vw;
   }
+  .container {
+    height: auto;
+    min-height: 100vh;
+  }
 }
