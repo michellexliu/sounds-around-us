@@ -32,13 +32,6 @@ p {
   font-family: "Times New Roman";
 }
 
-.container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .searchContainer {
   padding-top: 2vh;
 }

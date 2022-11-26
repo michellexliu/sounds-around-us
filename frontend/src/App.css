@@ -14,4 +14,14 @@
   text-decoration: none;
   padding: 1vh 1.5vw;
   border-radius: 10px;
+  border: none;
+}
+
+button,
+input[type="text"],
+input[type="button"],
+input[type="submit"] {
+  -webkit-appearance: none !important;
+  -moz-appearance: none;
+  appearance: none;
 }

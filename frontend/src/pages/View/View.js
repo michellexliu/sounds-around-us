@@ -127,16 +127,25 @@ function View({ playbackReady, setPlaybackReady }) {
       ) : (
         <></>
       )} */}
-      <div className={styles.text}>
-        <h1>
-          {currentTrack?.name} - {currentTrack?.artists[0].name}
-        </h1>
-        <p>
-          Volume on. Click the story text area to load a new song and story.
-          Click the vinyl to pause and unpause the song.
-        </p>
-        {autoplayFailed === true ? <p>Click the vinyl to begin.</p> : <></>}
-      </div>
+      {currentTrack && currentTrack.artists ? (
+        <div className={styles.text}>
+          <h1>
+            {currentTrack?.name} - {currentTrack?.artists[0].name}
+          </h1>
+          <p>
+            Volume on. Click the story text area to load a new song and story.
+            Click the vinyl to pause and unpause the song.
+          </p>
+          {autoplayFailed === true && <p>Click the vinyl to begin.</p>}
+        </div>
+      ) : (
+        <div className={styles.text}>
+          <p>Your Spotify access token has expired. Please log in again.</p>
+          <Link to="/" className={cn("btn", styles.back)}>
+            Back to Home
+          </Link>
+        </div>
+      )}
       {trackInfo && player && deviceID ? (
         <div className={styles.player}>
           <WebPlayback

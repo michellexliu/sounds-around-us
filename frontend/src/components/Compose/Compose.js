@@ -23,8 +23,11 @@ function Compose({ setPost, setStep, song }) {
         method="post"
         autoComplete="off"
       >
-        <input name="song" value={song} hidden readOnly></input>
-        <label htmlFor="message">What does this song mean to you?</label>
+        <h1>
+          Song: {song.name} - {song.artists}
+        </h1>
+        <input name="song" value={song.id} hidden readOnly></input>
+        <label htmlFor="message">What does {song.name} mean to you?</label>
         <textarea
           onChange={(e) => {
             setBody(e.target.value);

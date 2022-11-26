@@ -46,7 +46,7 @@ function Search({ setSong, setStep }) {
   };
 
   return (
-    <div className={styles.container}>
+    <>
       <label className={styles.searchPrompt} htmlFor="track">
         What's a song that means something to you?
       </label>
@@ -84,7 +84,7 @@ function Search({ setSong, setStep }) {
                 name={name}
                 onClick={() => {
                   console.log("id", id);
-                  setSong(id);
+                  setSong({ id, name, artists: artistStr });
                   setStep("compose");
                 }}
               />
@@ -92,7 +92,7 @@ function Search({ setSong, setStep }) {
           })}
         </table>
       </div>
-    </div>
+    </>
   );
 }
 

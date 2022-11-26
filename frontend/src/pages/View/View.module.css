@@ -1,12 +1,12 @@
 .container h1 {
   text-align: center;
-  padding-top: 2vh;
   font-family: "Helvetica Neue";
   font-weight: 600;
 }
 
 .text {
   text-align: center;
+  padding-top: 2vh;
 }
 
 .text p {
@@ -47,4 +47,8 @@
 
 .submit {
   margin-bottom: 2vh;
+}
+
+.back {
+  margin-top: 2vh;
 }
