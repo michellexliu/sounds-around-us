@@ -16,6 +16,10 @@ function App() {
     const getToken = refreshToken(setToken);
     getToken();
     console.log(token);
+
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      setPlaybackReady(true);
+    };
   }, []);
 
   return (

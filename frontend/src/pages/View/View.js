@@ -76,9 +76,6 @@ function View({ playbackReady, setPlaybackReady }) {
   useEffect(() => {
     if (!token) {
       getToken();
-      window.onSpotifyWebPlaybackSDKReady = () => {
-        setPlaybackReady(true);
-      };
     } else {
       if (playbackReady) {
         const player = new window.Spotify.Player({
