@@ -45,9 +45,14 @@
   transition: 0.3s;
 }
 
-.vinyl {
+.vinylPlaying {
   animation: 12s linear spinThat infinite;
 }
+
+.vinylPaused {
+  animation: 1200s linear spinThat infinite;
+}
+
 .vinyl:hover {
   cursor: pointer;
 }

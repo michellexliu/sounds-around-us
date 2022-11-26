@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import cn from "classnames";
 
 import styles from "./WebPlayback.module.css";
 
@@ -58,7 +59,12 @@ function WebPlayback({
           }}
         >
           <div className={styles.album}>
-            <div className={styles.vinyl}>
+            <div
+              className={cn(
+                styles.vinyl,
+                is_paused ? styles.vinylPaused : styles.vinylPlaying
+              )}
+            >
               <div
                 className={styles.print}
                 style={{

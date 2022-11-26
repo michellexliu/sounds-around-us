@@ -1,13 +1,35 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ReactAudioPlayer from "react-audio-player";
 import cn from "classnames";
+import { motion, AnimatePresence } from "framer-motion";
 
 import styles from "./View.module.css";
 import AuthContext from "../../lib/AuthContext";
 import { refreshToken } from "../../lib/helpers";
 import WebPlayback from "../../components/WebPlayback/WebPlayback";
 
+const items = {
+  hidden: {
+    opacity: 0,
+    transition: {
+      when: "afterChildren",
+      staggerChildren: 0.2,
+      // ease: 'linear',
+      staggerDirection: -1,
+      duration: 1,
+    },
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.2,
+      // ease: 'linear',
+      staggerDirection: 1,
+      duration: 1,
+    },
+  },
+};
 function View({ playbackReady, setPlaybackReady }) {
   const { token, setToken } = useContext(AuthContext);
 
@@ -19,6 +41,7 @@ function View({ playbackReady, setPlaybackReady }) {
   const [currentTrack, setCurrentTrack] = useState(trackInfo);
   const [autoplayFailed, setAutoplayFailed] = useState(false);
   const [is_paused, setPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   const getToken = () => refreshToken(setToken);
 
@@ -108,63 +131,86 @@ function View({ playbackReady, setPlaybackReady }) {
       const { track, body } = post[0];
       setBody(body);
       console.log(track);
-      if (track)
+      if (track) {
         getSong(track).then((res) => {
           setTrackInfo(res);
           setCurrentTrack(res);
           console.log(res);
         });
+      }
     }
   }, [post]);
 
   return (
-    <div className={styles.container}>
-      {/* {trackInfo ? (
-        <div>
-          <p>{trackInfo.name}</p>
-          <ReactAudioPlayer src={trackInfo.preview_url} autoPlay controls />
-        </div>
-      ) : (
-        <></>
-      )} */}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 2.5 }}
+      className={styles.container}
+    >
       {currentTrack && currentTrack.artists ? (
-        <div className={styles.text}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2.5 }}
+          className={styles.text}
+        >
           <h1>
             {currentTrack?.name} - {currentTrack?.artists[0].name}
           </h1>
           <p>
-            Put your volume on. Click the story text area to load a new song and
-            story. Click the vinyl to pause and unpause the song.
+            Turn your volume on. Click the story text area to load a new song
+            and story. Click the vinyl to pause and unpause the song.
           </p>
-          {autoplayFailed === true && <p>Click the vinyl to begin.</p>}
-        </div>
+          {autoplayFailed === true && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              Click the vinyl to begin.
+            </motion.p>
+          )}
+        </motion.div>
       ) : (
-        <div className={styles.text}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2.5 }}
+          className={styles.text}
+        >
           <p>Your Spotify access token has expired. Please log in again.</p>
           <Link to="/" className={cn("btn", styles.back)}>
             Back to Home
           </Link>
-        </div>
+        </motion.div>
       )}
-      {trackInfo && player && deviceID ? (
-        <div className={styles.player}>
-          <WebPlayback
-            track={trackInfo}
-            player={player}
-            play={play}
-            currentTrack={currentTrack}
-            setCurrentTrack={setCurrentTrack}
-            setAutoplayFailed={setAutoplayFailed}
-            is_paused={is_paused}
-            setPaused={setPaused}
-          />
-          <p className={styles.body} onClick={getNewPost}>
-            {body}
-          </p>
-        </div>
-      ) : (
-        <></>
-      )}
+      <AnimatePresence exitBeforeEnter mode="wait">
+        {trackInfo && player && deviceID && (
+          <motion.div
+            variants={items}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className={styles.player}
+            key={trackInfo.name}
+          >
+            <WebPlayback
+              track={trackInfo}
+              player={player}
+              play={play}
+              currentTrack={currentTrack}
+              setCurrentTrack={setCurrentTrack}
+              setAutoplayFailed={setAutoplayFailed}
+              is_paused={is_paused}
+              setPaused={setPaused}
+            />
+            <p className={styles.body} onClick={getNewPost}>
+              {body}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <Link
         to="/post"
         className={cn("btn", styles.submit)}
@@ -177,7 +223,7 @@ function View({ playbackReady, setPlaybackReady }) {
       >
         Submit your own song
       </Link>
-    </div>
+    </motion.div>
   );
 }
 
