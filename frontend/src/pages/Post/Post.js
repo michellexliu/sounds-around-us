@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import styles from "./Post.module.css";
 import AuthContext from "../../lib/AuthContext";
@@ -19,6 +20,9 @@ function Post() {
       ) : (
         <Compose setPost={setPost} setStep={setStep} song={song} />
       )}
+      <Link to="/view" className={styles.back}>
+        Back to View
+      </Link>
     </div>
   );
 }

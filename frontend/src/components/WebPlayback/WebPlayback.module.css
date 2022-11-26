@@ -50,7 +50,7 @@
 }
 
 .vinylPaused {
-  animation: 1200s linear spinThat infinite;
+  animation: 30000s linear spinThat infinite;
 }
 
 .vinyl:hover {
