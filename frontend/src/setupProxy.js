@@ -1,28 +1,30 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
+const target = "https://sounds-around-us.herokuapp.com";
+
 module.exports = function (app) {
   app.use(
     "/auth/**",
     createProxyMiddleware({
-      target: "http://localhost:3001",
+      target,
     })
   );
   app.use(
     "/submit",
     createProxyMiddleware({
-      target: "http://localhost:3001",
+      target,
     })
   );
   app.use(
     "/posts",
     createProxyMiddleware({
-      target: "http://localhost:3001",
+      target,
     })
   );
   app.use(
     "/post",
     createProxyMiddleware({
-      target: "http://localhost:3001",
+      target,
     })
   );
 };

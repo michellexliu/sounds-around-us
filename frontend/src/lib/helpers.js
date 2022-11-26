@@ -15,7 +15,9 @@ export const queryString = (params) =>
 
 export const refreshToken = (setToken) => {
   return async function getToken() {
-    const response = await fetch("/auth/token");
+    const response = await fetch(
+      "https://sounds-around-us.herokuapp.com/auth/token"
+    );
     const json = await response.json();
     setToken(json.access_token);
   };
