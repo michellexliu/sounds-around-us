@@ -6,30 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import styles from "./View.module.css";
 import AuthContext from "../../lib/AuthContext";
 import { refreshToken } from "../../lib/helpers";
+import { items } from "../../lib/constants";
 import WebPlayback from "../../components/WebPlayback/WebPlayback";
 
-const items = {
-  hidden: {
-    opacity: 0,
-    transition: {
-      when: "afterChildren",
-      staggerChildren: 0.2,
-      // ease: 'linear',
-      staggerDirection: -1,
-      duration: 1,
-    },
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.2,
-      // ease: 'linear',
-      staggerDirection: 1,
-      duration: 1,
-    },
-  },
-};
 function View({ playbackReady, setPlaybackReady }) {
   const { token, setToken } = useContext(AuthContext);
 
