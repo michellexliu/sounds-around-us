@@ -14,7 +14,7 @@ const client_secret = process.env.CLIENT_SECRET; // Your client id
 console.log(client_id);
 const scope = "streaming user-read-private user-read-email user-top-read";
 const redirect_uri =
-  process.env.redirect_uri || `http://localhost:${PORT}/auth/callback`;
+  process.env.REDIRECT_URI || `http://localhost:${PORT}/auth/callback`;
 
 let access_token = undefined;
 let refresh_token = undefined;
