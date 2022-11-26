@@ -38,9 +38,11 @@
 
 .vinyl:hover .overlay {
   display: flex;
+  transition: 0.3s;
 }
 .vinyl:hover .print {
   opacity: 40%;
+  transition: 0.3s;
 }
 
 .vinyl {
