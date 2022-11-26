@@ -15,7 +15,8 @@
     "react-scripts": "5.0.1",
     "react-spotify-web-playback": "^0.10.0",
     "react-type-animation": "^2.1.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "http-proxy-middleware": "^2.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,8 +41,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "http-proxy-middleware": "^2.0.6"
   }
 }
