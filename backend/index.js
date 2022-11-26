@@ -50,15 +50,10 @@ app.listen(PORT, () => {
   console.log("started");
 });
 
-mongoose.connect("mongodb://localhost:27017/songs");
-// mongoose.connect(
-//   `mongodb+srv://admin-michelle:${process.env.DB_PW}@cluster0.07bud.mongodb.net/userDB`,
-//   {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     useFindAndModify: false
-//   }
-// );
+// mongoose.connect("mongodb://localhost:27017/songs");
+mongoose.connect(
+  `mongodb+srv://admin-michelle:${process.env.DB_PW}@cluster0.07bud.mongodb.net/songs`
+);
 const postSchema = new mongoose.Schema({
   body: String,
   date: Date,
