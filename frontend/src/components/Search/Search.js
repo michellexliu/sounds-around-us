@@ -57,6 +57,9 @@ function Search({ setSong, setStep }) {
           type="text"
           onChange={handleChange}
           value={q}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSubmit();
+          }}
         />
         <button
           onClick={handleSubmit}
