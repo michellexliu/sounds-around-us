@@ -142,50 +142,52 @@ function View({ playbackReady, setPlaybackReady }) {
   }, [post]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 2.5 }}
-      className={styles.container}
-    >
-      {currentTrack && currentTrack.artists ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2.5 }}
-          className={styles.text}
-        >
-          <h1>
-            {currentTrack?.name} - {currentTrack?.artists[0].name}
-          </h1>
-          <p>
-            Turn your volume on. Click the story text area to load a new song
-            and story. Click the vinyl to pause and unpause the song.
-          </p>
-          {autoplayFailed === true && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              Click the vinyl to begin.
-            </motion.p>
-          )}
-        </motion.div>
-      ) : (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2.5 }}
-          className={styles.text}
-        >
-          <p>Your Spotify access token has expired. Please log in again.</p>
-          <Link to="/" className={cn("btn", styles.back)}>
-            Back to Home
-          </Link>
-        </motion.div>
-      )}
-      <AnimatePresence exitBeforeEnter mode="wait">
+    <AnimatePresence exitBeforeEnter mode="wait">
+      <motion.div
+        variants={items}
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        className={styles.container}
+        key={trackInfo ? trackInfo.name : ""}
+      >
+        {currentTrack && currentTrack.artists ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2.5 }}
+            className={styles.text}
+          >
+            <h1>
+              {currentTrack?.name} - {currentTrack?.artists[0].name}
+            </h1>
+            <p>
+              Turn your volume on. Click the story text area to load a new song
+              and story. Click the vinyl to pause and unpause the song.
+            </p>
+            {autoplayFailed === true && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+              >
+                Click the vinyl to begin.
+              </motion.p>
+            )}
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2.5 }}
+            className={styles.text}
+          >
+            <p>Your Spotify access token has expired. Please log in again.</p>
+            <Link to="/" className={cn("btn", styles.back)}>
+              Back to Home
+            </Link>
+          </motion.div>
+        )}
         {trackInfo && player && deviceID && (
           <motion.div
             variants={items}
@@ -193,7 +195,6 @@ function View({ playbackReady, setPlaybackReady }) {
             animate="visible"
             exit="hidden"
             className={styles.player}
-            key={trackInfo.name}
           >
             <WebPlayback
               track={trackInfo}
@@ -210,20 +211,20 @@ function View({ playbackReady, setPlaybackReady }) {
             </p>
           </motion.div>
         )}
-      </AnimatePresence>
-      <Link
-        to="/post"
-        className={cn("btn", styles.submit)}
-        onClick={() => {
-          if (!is_paused && player) {
-            player.togglePlay();
-            setPaused(!is_paused);
-          }
-        }}
-      >
-        Submit your own song
-      </Link>
-    </motion.div>
+        <Link
+          to="/post"
+          className={cn("btn", styles.submit)}
+          onClick={() => {
+            if (!is_paused && player) {
+              player.togglePlay();
+              setPaused(!is_paused);
+            }
+          }}
+        >
+          Submit your own song
+        </Link>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
