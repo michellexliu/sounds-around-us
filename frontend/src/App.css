@@ -24,9 +24,9 @@
 }
 
 button,
-input[type="text"],
-input[type="button"],
-input[type="submit"] {
+input[type='text'],
+input[type='button'],
+input[type='submit'] {
   -webkit-appearance: none !important;
   -moz-appearance: none;
   appearance: none;

@@ -3,7 +3,7 @@
 }
 
 .container h1 {
-  font-family: "Helvetica Neue";
+  font-family: 'Helvetica Neue';
   font-weight: 600;
   font-size: 1.6em;
 }
@@ -17,7 +17,7 @@ form {
 }
 
 .prompt {
-  font-family: "Times New Roman";
+  font-family: 'Georgia';
   font-size: 2.5em;
 }
 

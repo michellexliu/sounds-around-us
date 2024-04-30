@@ -1,32 +1,33 @@
-import React, { useState, useContext, useEffect } from "react";
-import cn from "classnames";
+import React, { useState, useContext, useEffect } from 'react';
+import cn from 'classnames';
+import { TypeAnimation } from 'react-type-animation';
 
-import styles from "./Search.module.css";
-import { fromMS, queryString } from "../../lib/helpers";
-import AuthContext from "../../lib/AuthContext";
-import { refreshToken } from "../../lib/helpers";
+import styles from './Search.module.css';
+import { fromMS, queryString } from '../../lib/helpers';
+import AuthContext from '../../lib/AuthContext';
+import { refreshToken } from '../../lib/helpers';
 function Search({ setSong, setStep }) {
   const { token, setToken } = useContext(AuthContext);
-  console.log("token", token);
+  console.log('token', token);
 
-  const [q, setQ] = useState("");
+  const [q, setQ] = useState('');
   const [res, setRes] = useState([]);
-  const base = "https://api.spotify.com/v1/search";
+  const base = 'https://api.spotify.com/v1/search';
   const headers = new Headers({
-    Authorization: "Bearer " + token,
+    Authorization: 'Bearer ' + token,
   });
 
-  useEffect(() => {
-    if (!token) {
-      refreshToken(setToken)();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!token) {
+  //     refreshToken(setToken)();
+  //   }
+  // }, []);
 
   async function search(q) {
     const response = await fetch(
       `${base}?${queryString({
         q,
-        type: "track",
+        type: 'track',
       })}`,
       {
         headers,
@@ -34,7 +35,7 @@ function Search({ setSong, setStep }) {
     );
     const json = await response.json();
     setRes(json?.tracks?.items);
-    console.log(res);
+    console.log('search', res);
   }
 
   const handleSubmit = () => {
@@ -48,7 +49,31 @@ function Search({ setSong, setStep }) {
   return (
     <>
       <label className={styles.searchPrompt} htmlFor="track">
-        What's a song that means something to you?
+        A song{' '}
+        <TypeAnimation
+          // Same String at the start will only be typed once, initially
+          sequence={[
+            'you love',
+            1000,
+            "that's special to you",
+            1000,
+            'that holds memories',
+            1000,
+            'that reminds you of someone',
+            1000,
+            'that reminds you of a place',
+            1000,
+            'that helped you through something',
+            1000,
+            'that makes you feel hopeful',
+            1000,
+            'that hypes you up',
+            1000,
+          ]}
+          speed={40} // Custom Speed from 1-99 - Default Speed: 40
+          wrapper="span" // Animation will be rendered as a <span>
+          repeat={Infinity} // Repeat this Animation Sequence infinitely
+        />
       </label>
       <div className={styles.searchContainer}>
         <input
@@ -58,13 +83,13 @@ function Search({ setSong, setStep }) {
           onChange={handleChange}
           value={q}
           onKeyDown={(e) => {
-            if (e.key === "Enter") handleSubmit();
+            if (e.key === 'Enter') handleSubmit();
           }}
         />
         <button
           onClick={handleSubmit}
-          disabled={q === ""}
-          className={cn(styles.submit, "btn")}
+          disabled={q === ''}
+          className={cn(styles.submit, 'btn')}
         >
           Search
         </button>
@@ -74,7 +99,7 @@ function Search({ setSong, setStep }) {
           {res?.map(({ album, artists, duration_ms, name, id }, index) => {
             const key = `${q} option ${index}`;
             const image = album.images[album.images.length - 1].url;
-            const artistStr = artists.map(({ name }) => name).join(", ");
+            const artistStr = artists.map(({ name }) => name).join(', ');
             const albumName = album.name;
 
             return (
@@ -86,9 +111,9 @@ function Search({ setSong, setStep }) {
                 key={key}
                 name={name}
                 onClick={() => {
-                  console.log("id", id);
+                  console.log('id', id);
                   setSong({ id, name, artists: artistStr });
-                  setStep("compose");
+                  setStep('compose');
                 }}
               />
             );

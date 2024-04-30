@@ -2,7 +2,7 @@ export const items = {
   hidden: {
     opacity: 0,
     transition: {
-      when: "afterChildren",
+      when: 'afterChildren',
       staggerChildren: 0.2,
       // ease: 'linear',
       staggerDirection: -1,
@@ -12,7 +12,7 @@ export const items = {
   visible: {
     opacity: 1,
     transition: {
-      when: "beforeChildren",
+      when: 'beforeChildren',
       staggerChildren: 0.2,
       // ease: 'linear',
       staggerDirection: 1,
@@ -20,3 +20,5 @@ export const items = {
     },
   },
 };
+
+export const BACKEND_ROOT = 'http://localhost:3001';

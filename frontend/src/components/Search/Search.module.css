@@ -29,7 +29,14 @@ p {
 
 .searchPrompt {
   font-size: 2.5em;
-  font-family: "Times New Roman";
+  font-family: 'Georgia';
+}
+
+.searchSubtitle {
+  font-family: 'Helvetica Neue';
+  font-size: 1.4em;
+  color: rgb(73, 71, 71);
+  padding-top: 10px;
 }
 
 .searchContainer {

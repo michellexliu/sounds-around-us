@@ -1,13 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import cn from "classnames";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import cn from 'classnames';
+import { motion, AnimatePresence } from 'framer-motion';
+import axios from 'axios';
 
-import styles from "./View.module.css";
-import AuthContext from "../../lib/AuthContext";
-import { refreshToken } from "../../lib/helpers";
-import { items } from "../../lib/constants";
-import WebPlayback from "../../components/WebPlayback/WebPlayback";
+import styles from './View.module.css';
+import AuthContext from '../../lib/AuthContext';
+import { refreshToken } from '../../lib/helpers';
+import { BACKEND_ROOT, items } from '../../lib/constants';
+import WebPlayback from '../../components/WebPlayback/WebPlayback';
 
 function View({ playbackReady, setPlaybackReady }) {
   const { token, setToken } = useContext(AuthContext);
@@ -22,11 +23,11 @@ function View({ playbackReady, setPlaybackReady }) {
   const [is_paused, setPaused] = useState(false);
   const [clickCount, setClickCount] = useState(true);
 
-  const getToken = () => refreshToken(setToken);
+  // const getToken = () => refreshToken(setToken);
 
-  const base = "https://api.spotify.com/v1/tracks";
+  const base = 'https://api.spotify.com/v1/tracks';
   const headers = new Headers({
-    Authorization: "Bearer " + token,
+    Authorization: 'Bearer ' + token,
   });
 
   async function getSong(id) {
@@ -39,14 +40,12 @@ function View({ playbackReady, setPlaybackReady }) {
 
   const getNewPost = () => {
     setClickCount(clickCount + 1);
-    if (!token) {
-      getToken();
-    }
+    // if (!token) {
+    //   getToken();
+    // }
     async function getPost() {
-      const response = await fetch("/post");
-      const json = await response.json();
-      console.log(json);
-      setPost(json?.result);
+      const response = await axios.get(`${BACKEND_ROOT}/post`);
+      setPost(response?.data?.result);
     }
 
     getPost();
@@ -64,10 +63,10 @@ function View({ playbackReady, setPlaybackReady }) {
   }) => {
     getOAuthToken((access_token) => {
       fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceID}`, {
-        method: "PUT",
+        method: 'PUT',
         body: JSON.stringify({ uris: [spotify_uri] }),
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${access_token}`,
         },
       });
@@ -76,10 +75,10 @@ function View({ playbackReady, setPlaybackReady }) {
 
   useEffect(() => {
     if (!token) {
-      getToken();
+      return;
     } else {
       const player = new window.Spotify.Player({
-        name: "Web Playback SDK",
+        name: 'Web Playback SDK',
         getOAuthToken: (cb) => {
           cb(token);
         },
@@ -88,13 +87,13 @@ function View({ playbackReady, setPlaybackReady }) {
 
       setPlayer(player);
 
-      player.addListener("ready", ({ device_id }) => {
-        console.log("Ready with Device ID", device_id);
+      player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
         setDeviceID(device_id);
       });
 
-      player.addListener("not_ready", ({ device_id }) => {
-        console.log("Device ID has gone offline", device_id);
+      player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
       });
 
       player.connect();
@@ -117,7 +116,7 @@ function View({ playbackReady, setPlaybackReady }) {
   }, [post]);
 
   return (
-    <AnimatePresence exitBeforeEnter mode="wait">
+    <AnimatePresence mode="wait">
       <motion.div
         variants={items}
         initial="hidden"
@@ -158,7 +157,7 @@ function View({ playbackReady, setPlaybackReady }) {
             className={styles.text}
           >
             <p>Your Spotify access token has expired. Please log in again.</p>
-            <Link to="/" className={cn("btn", styles.back)}>
+            <Link to="/" className={cn('btn', styles.back)}>
               Back to Home
             </Link>
           </motion.div>
@@ -188,7 +187,7 @@ function View({ playbackReady, setPlaybackReady }) {
         )}
         <Link
           to="/post"
-          className={cn("btn", styles.submit)}
+          className={cn('btn', styles.submit)}
           onClick={() => {
             if (!is_paused && player) {
               player.togglePlay();

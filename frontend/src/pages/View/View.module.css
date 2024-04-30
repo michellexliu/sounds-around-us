@@ -1,6 +1,6 @@
 .container h1 {
   text-align: center;
-  font-family: "Helvetica Neue";
+  font-family: 'Helvetica Neue';
   font-weight: 600;
 }
 
@@ -31,7 +31,7 @@
 .body {
   padding-left: 4vw;
   font-size: 2.5em;
-  font-family: "Times New Roman";
+  font-family: 'Georgia';
   width: 100%;
   white-space: pre-line;
   height: 60vh;

@@ -1,4 +1,0 @@
-/auth/* https://sounds-around-us.herokuapp.com/auth/:splat 200
-/post https://sounds-around-us.herokuapp.com/post 200
-/posts https://sounds-around-us.herokuapp.com/posts 200
-/submit https://sounds-around-us.herokuapp.com/submit 200
