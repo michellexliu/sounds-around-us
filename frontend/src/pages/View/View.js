@@ -11,13 +11,11 @@ import { BACKEND_ROOT, items } from '../../lib/constants';
 import WebPlayback from '../../components/WebPlayback/WebPlayback';
 
 function View({ playbackReady, setPlaybackReady }) {
-  const { token, setToken } = useContext(AuthContext);
+  const { token, player, deviceID } = useContext(AuthContext);
 
   const [post, setPost] = useState(undefined);
   const [body, setBody] = useState(undefined);
   const [trackInfo, setTrackInfo] = useState(undefined);
-  const [player, setPlayer] = useState(undefined);
-  const [deviceID, setDeviceID] = useState(undefined);
   const [currentTrack, setCurrentTrack] = useState(trackInfo);
   const [autoplayFailed, setAutoplayFailed] = useState(false);
   const [is_paused, setPaused] = useState(false);
@@ -72,33 +70,6 @@ function View({ playbackReady, setPlaybackReady }) {
       });
     });
   };
-
-  useEffect(() => {
-    if (!token) {
-      return;
-    } else {
-      const player = new window.Spotify.Player({
-        name: 'Web Playback SDK',
-        getOAuthToken: (cb) => {
-          cb(token);
-        },
-        volume: 0.5,
-      });
-
-      setPlayer(player);
-
-      player.addListener('ready', ({ device_id }) => {
-        console.log('Ready with Device ID', device_id);
-        setDeviceID(device_id);
-      });
-
-      player.addListener('not_ready', ({ device_id }) => {
-        console.log('Device ID has gone offline', device_id);
-      });
-
-      player.connect();
-    }
-  }, [token]);
 
   useEffect(() => {
     if (post && post.length > 0) {

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import cn from "classnames";
+import React, { useState, useEffect } from 'react';
+import cn from 'classnames';
 
-import styles from "./WebPlayback.module.css";
+import styles from './WebPlayback.module.css';
 
 function WebPlayback({
   track,
@@ -16,14 +16,15 @@ function WebPlayback({
   const [is_active, setActive] = useState(false);
 
   useEffect(() => {
-    player.addListener("autoplay_failed", () => {
-      console.log("Autoplay is not allowed by the browser autoplay rules");
+    player.addListener('autoplay_failed', () => {
+      console.log('Autoplay is not allowed by the browser autoplay rules');
       setAutoplayFailed(true);
     });
-    player.addListener("player_state_changed", (state) => {
+    player.addListener('player_state_changed', (state) => {
       if (!state) {
         return;
       }
+      console.log('state changed', state);
 
       setCurrentTrack(state.track_window.current_track);
       setPaused(state.paused);
@@ -36,7 +37,7 @@ function WebPlayback({
       playerInstance: player,
       spotify_uri: currentTrack?.uri,
     });
-  }, []);
+  }, [player]);
 
   useEffect(() => {
     console.log(currentTrack);
@@ -72,7 +73,7 @@ function WebPlayback({
                 }}
               ></div>
               <div className={styles.overlay}>
-                <p className={styles.toggle}>{is_paused ? "PLAY" : "PAUSE"}</p>
+                <p className={styles.toggle}>{is_paused ? 'PLAY' : 'PAUSE'}</p>
               </div>
             </div>
           </div>

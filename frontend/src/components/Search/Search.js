@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import cn from 'classnames';
 import { TypeAnimation } from 'react-type-animation';
+import debounce from 'lodash.debounce';
 
 import styles from './Search.module.css';
 import { fromMS, queryString } from '../../lib/helpers';
 import AuthContext from '../../lib/AuthContext';
-import { refreshToken } from '../../lib/helpers';
+
 function Search({ setSong, setStep }) {
   const { token, setToken } = useContext(AuthContext);
   console.log('token', token);
@@ -16,12 +17,6 @@ function Search({ setSong, setStep }) {
   const headers = new Headers({
     Authorization: 'Bearer ' + token,
   });
-
-  // useEffect(() => {
-  //   if (!token) {
-  //     refreshToken(setToken)();
-  //   }
-  // }, []);
 
   async function search(q) {
     const response = await fetch(
@@ -34,15 +29,18 @@ function Search({ setSong, setStep }) {
       }
     );
     const json = await response.json();
-    setRes(json?.tracks?.items);
-    console.log('search', res);
+    if (json?.tracks?.items && json?.tracks?.items.length > 0)
+      setRes(json?.tracks?.items);
   }
+
+  const throttled_search = debounce((q) => search(q), 1000);
 
   const handleSubmit = () => {
     search(q);
   };
 
   const handleChange = (e) => {
+    throttled_search(e.target.value);
     setQ(e.target.value);
   };
 
@@ -57,17 +55,15 @@ function Search({ setSong, setStep }) {
             1000,
             "that's special to you",
             1000,
-            'that holds memories',
-            1000,
             'that reminds you of someone',
             1000,
             'that reminds you of a place',
             1000,
-            'that helped you through something',
+            'that reminds you of a moment',
             1000,
             'that makes you feel hopeful',
             1000,
-            'that hypes you up',
+            'that brings you joy',
             1000,
           ]}
           speed={40} // Custom Speed from 1-99 - Default Speed: 40

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation, Redirect } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import Login from './pages/Login/Login';
 import Post from './pages/Post/Post';
@@ -12,23 +12,58 @@ import './App.css';
 
 function App() {
   const [token, setToken] = useState(undefined);
+  const [player, setPlayer] = useState(undefined);
+  const [deviceID, setDeviceID] = useState(undefined);
+
   const [playbackReady, setPlaybackReady] = useState(false);
   const location = useLocation();
 
   const { access_token } = queryString.parse(location.hash);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token) setToken(access_token);
+    if (!token) {
+      if (access_token) setToken(access_token);
+      else {
+        console.log('blah');
+        navigate('/');
+        return;
+      }
+    }
     console.log('access_token', access_token);
+  }, [access_token, token]);
 
+  useEffect(() => {
     window.onSpotifyWebPlaybackSDKReady = () => {
-      setPlaybackReady(true);
+      if (!token) return;
+      const player = new window.Spotify.Player({
+        name: 'Web Playback SDK',
+        getOAuthToken: (cb) => {
+          cb(token);
+        },
+        volume: 0.5,
+      });
+
+      setPlayer(player);
+
+      player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+        setDeviceID(device_id);
+      });
+
+      player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
+      });
+
+      player.connect();
     };
-  }, [access_token]);
+  }, [token]);
 
   return (
     <div className="container">
-      <AuthContext.Provider value={{ token, setToken }}>
+      <AuthContext.Provider
+        value={{ token, setToken, player, setPlayer, deviceID, setDeviceID }}
+      >
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route exact path="/post" element={<Post />} />
