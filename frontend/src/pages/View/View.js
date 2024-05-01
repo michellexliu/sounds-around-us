@@ -156,18 +156,6 @@ function View({ playbackReady, setPlaybackReady }) {
             </p>
           </motion.div>
         )}
-        <Link
-          to="/post"
-          className={cn('btn', styles.submit)}
-          onClick={() => {
-            if (!is_paused && player) {
-              player.togglePlay();
-              setPaused(!is_paused);
-            }
-          }}
-        >
-          Submit your own song
-        </Link>
       </motion.div>
     </AnimatePresence>
   );

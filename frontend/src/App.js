@@ -9,6 +9,7 @@ import { refreshToken } from './lib/helpers';
 import queryString from 'query-string';
 
 import './App.css';
+import Navigation from './components/Navigation';
 
 function App() {
   const [token, setToken] = useState(undefined);
@@ -64,6 +65,7 @@ function App() {
       <AuthContext.Provider
         value={{ token, setToken, player, setPlayer, deviceID, setDeviceID }}
       >
+        <Navigation />
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route exact path="/post" element={<Post />} />

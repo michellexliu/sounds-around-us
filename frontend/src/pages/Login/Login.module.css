@@ -10,13 +10,12 @@ h1 {
   margin: 0;
   font-family: Mazius, 'AppleGaramond';
   text-transform: uppercase;
-  font-size: 3em;
   font-weight: 400;
   letter-spacing: 0.03em;
 }
 
 .subtext {
-  font-size: 2em;
+  font-size: 48px;
   font-family: AppleGaramond;
   margin-bottom: 2vh;
   letter-spacing: 1px;

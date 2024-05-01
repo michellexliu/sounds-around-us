@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.top,
+.bottom {
+  left: 0;
+  right: 0;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+}
+
+.bottom {
+  bottom: 0;
+  text-decoration: underline;
+}
+
+.bottom > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3vh 2vw;
+}
+
+.container p:hover {
+  cursor: pointer;
+}
+
+.modalContainer {
+  padding: 12px 24px;
+}
+
+.aboutTitle {
+  font-size: 48px;
+  font-family: 'AppleGaramond', Georgia, 'Times New Roman', Times, serif;
+  margin-bottom: 20px;
+}
+
+.aboutDescription {
+  font-size: 24px;
+  margin-bottom: 20px;
+}

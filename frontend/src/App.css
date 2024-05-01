@@ -2,6 +2,11 @@
   --dark-grey: #828282;
 }
 
+a,
+a:visited {
+  color: var(--dark-grey);
+}
+
 .container {
   width: 100%;
   height: 100vh;
