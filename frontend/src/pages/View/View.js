@@ -1,14 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import Marquee from 'react-fast-marquee';
 
 import styles from './View.module.css';
-import AuthContext from '../../lib/AuthContext';
-import { refreshToken } from '../../lib/helpers';
-import { BACKEND_ROOT, items } from '../../lib/constants';
 import WebPlayback from '../../components/WebPlayback/WebPlayback';
+import AuthContext from '../../lib/AuthContext';
+import { BACKEND_ROOT, items } from '../../lib/constants';
 import { useTheme } from '../../lib/ThemeContext';
 
 function View({ playbackReady, setPlaybackReady }) {
@@ -30,6 +30,22 @@ function View({ playbackReady, setPlaybackReady }) {
   const headers = new Headers({
     Authorization: 'Bearer ' + token,
   });
+
+  const textWidth = useRef(null);
+
+  const scrollVariants = {
+    animate: {
+      x: [0, -(textWidth.current?.offsetWidth || 0)],
+      transition: {
+        x: {
+          repeat: Infinity,
+          repeatType: 'loop',
+          duration: 10, // Adjust duration to control the speed of the scrolling
+          ease: 'linear',
+        },
+      },
+    },
+  };
 
   async function getSong(id) {
     const response = await fetch(`${base}/${id}`, {
@@ -109,24 +125,14 @@ function View({ playbackReady, setPlaybackReady }) {
             initial="hidden"
             animate="visible"
             transition={{ duration: 2.5 }}
-            className={styles.text}
+            className={styles.nameBanner}
           >
-            <h1>
-              {currentTrack?.name} - {currentTrack?.artists[0].name}
-            </h1>
-            <p>
-              Turn your volume on. Click the story text area to load a new song
-              and story. Click the vinyl to pause and unpause the song.
-            </p>
-            {autoplayFailed === true && (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                Click the vinyl to begin.
-              </motion.p>
-            )}
+            <Marquee speed={150}>
+              <h1>
+                {currentTrack?.name} - {currentTrack?.artists[0].name}
+                &nbsp;&nbsp;
+              </h1>
+            </Marquee>
           </motion.div>
         ) : (
           <motion.div
@@ -159,7 +165,11 @@ function View({ playbackReady, setPlaybackReady }) {
               is_paused={is_paused}
               setPaused={setPaused}
             />
-            <p className={styles.body} onClick={getNewPost}>
+            <p
+              className={styles.body}
+              onClick={getNewPost}
+              style={{ fontSize: body.length > 1000 ? '32px' : '48px' }}
+            >
               {body}
             </p>
           </motion.div>

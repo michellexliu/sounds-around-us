@@ -60,33 +60,12 @@ function WebPlayback({
           }}
         >
           <div className={styles.album}>
-            <div
-              className={cn(
-                styles.vinyl,
-                is_paused ? styles.vinylPaused : styles.vinylPlaying
-              )}
-            >
-              <div
-                className={styles.print}
-                style={{
-                  backgroundImage: `url(${currentTrack?.album?.images[0].url})`,
-                }}
-              ></div>
-              <div className={styles.overlay}>
-                <p className={styles.toggle}>{is_paused ? 'PLAY' : 'PAUSE'}</p>
-              </div>
-            </div>
+            <img
+              src={currentTrack?.album?.images[0].url}
+              alt={`album cover for ${currentTrack?.album?.name}`}
+            />
           </div>
         </div>
-        {/* <button
-          className="btn-spotify"
-          onClick={() => {
-            player.togglePlay();
-            setPaused(!is_paused);
-          }}
-        >
-          {is_paused ? "PLAY" : "PAUSE"}
-        </button> */}
       </div>
     </div>
   );

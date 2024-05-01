@@ -12,82 +12,23 @@
   padding: 0;
   z-index: 1000;
   font-size: 2.5em;
-  font-family: "Helvetica";
+  font-family: 'Helvetica';
   font-weight: 600;
 }
 
-.overlay,
-.vinyl {
-  z-index: 0;
+.album img {
   width: 400px;
   height: 400px;
-  display: block;
-  background-color: rgba(0, 0, 0, 0.9);
-  background-size: 106% 106%;
-  background-position: center;
-  box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
-  content: "";
 }
 
-.overlay {
-  z-index: 1000;
-  display: none;
-  background-color: rgba(0, 0, 0, 1);
+.album {
+  position: fixed;
+  top: 25vh;
+  right: 5%;
 }
 
-.vinyl:hover .overlay {
-  display: flex;
-  transition: 0.3s;
-}
-.vinyl:hover .print {
-  opacity: 40%;
-  transition: 0.3s;
-}
-
-.vinylPlaying {
-  animation: 12s linear spinThat infinite;
-}
-
-.vinylPaused {
-  animation: 30000s linear spinThat infinite;
-}
-
-.vinyl:hover {
+.album:hover {
   cursor: pointer;
-}
-.vinyl::before {
-  position: absolute;
-  top: 2.5%;
-  left: 2.5%;
-  z-index: 10;
-  width: 95%;
-  height: 95%;
-  background-image: url("https://sounds-around-us.netlify.app/82267467.jpg");
-  background-size: 100% 100%;
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  opacity: 0.3;
-  content: "";
-}
-.vinyl .print {
-  position: absolute;
-  top: 33%;
-  left: 33%;
-  height: 34%;
-  width: 34%;
-  box-shadow: inset 0 0 0 5px rgba(150, 150, 150, 0.5);
-  background-size: cover;
-  border-radius: 50%;
-  z-index: 3;
-}
-@keyframes spinThat {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 @media only screen and (max-width: 768px) {
