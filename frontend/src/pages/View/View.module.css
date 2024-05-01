@@ -47,12 +47,11 @@
   letter-spacing: 1px;
   top: 10vh;
   left: 10vw;
+  padding-right: 20px;
 }
 
 .body:hover {
   cursor: pointer;
-  opacity: 0.5;
-  transition: 0.3s;
 }
 
 .container {
