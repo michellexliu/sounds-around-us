@@ -106,8 +106,8 @@ function View({ playbackReady, setPlaybackReady }) {
       >
         {currentTrack && currentTrack.artists ? (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial="hidden"
+            animate="visible"
             transition={{ duration: 2.5 }}
             className={styles.text}
           >

@@ -85,6 +85,7 @@ function App() {
       style={{
         backgroundColor: colorScheme.background,
         color: colorScheme.text,
+        transition: 'background-color 2s',
       }}
     >
       <AuthContext.Provider

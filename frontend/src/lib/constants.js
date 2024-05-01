@@ -1,6 +1,7 @@
 export const items = {
   hidden: {
-    opacity: 0,
+    filter: 'blur(10px)',
+    opacity: 0.3,
     transition: {
       when: 'afterChildren',
       staggerChildren: 0.2,
@@ -10,6 +11,7 @@ export const items = {
     },
   },
   visible: {
+    filter: 'blur(0px)',
     opacity: 1,
     transition: {
       when: 'beforeChildren',
