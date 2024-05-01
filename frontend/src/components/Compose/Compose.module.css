@@ -17,7 +17,8 @@ form {
 }
 
 .prompt {
-  font-family: 'Georgia';
+  font-family: 'AppleGaramond';
+  letter-spacing: 2%;
   font-size: 2.5em;
 }
 

@@ -61,9 +61,11 @@ function Search({ setSong, setStep }) {
             1000,
             'that reminds you of a moment',
             1000,
-            'that makes you feel hopeful',
+            'that reminds you that everything will be okay',
             1000,
             'that brings you joy',
+            1000,
+            'that never gets old',
             1000,
           ]}
           speed={40} // Custom Speed from 1-99 - Default Speed: 40
@@ -81,6 +83,7 @@ function Search({ setSong, setStep }) {
           onKeyDown={(e) => {
             if (e.key === 'Enter') handleSubmit();
           }}
+          autoComplete="off"
         />
         <button
           onClick={handleSubmit}

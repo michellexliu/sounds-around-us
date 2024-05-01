@@ -29,7 +29,8 @@ p {
 
 .searchPrompt {
   font-size: 2.5em;
-  font-family: 'Georgia';
+  font-family: 'AppleGaramond';
+  letter-spacing: 2%;
 }
 
 .searchSubtitle {

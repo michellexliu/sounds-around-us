@@ -1,21 +1,20 @@
 @font-face {
-  font-family: "Mazius";
-  src: url("https://static1.squarespace.com/static/5e260b901324310e95f28460/t/5e26104f732aba3bf2868c0a/1579552847688/MAZIUSREVIEW20.09-Italic.otf")
-    format("opentype");
+  font-family: 'AppleGaramond';
+  src: url('assets/AppleGaramond-Light.ttf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 body,
 textarea {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
