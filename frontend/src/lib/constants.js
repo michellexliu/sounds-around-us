@@ -27,8 +27,8 @@ export const COLOR_THEMES = [
     background: '#4F2E2D',
   },
   {
-    text: '#FFFFFF',
-    background: '#7E7F2D',
+    text: '#576FD7',
+    background: '#E3D9CC',
   },
   {
     text: '#7E7F2D',

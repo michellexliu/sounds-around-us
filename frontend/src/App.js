@@ -47,6 +47,8 @@ function App() {
   useEffect(() => {
     if (location.pathname === '/') {
       setToken(null);
+    }
+    if (location.pathname !== '/view') {
       setTheme(null);
     }
   }, [location]);
@@ -78,7 +80,13 @@ function App() {
   }, [token]);
 
   return (
-    <div className="container">
+    <div
+      className="container"
+      style={{
+        backgroundColor: colorScheme.background,
+        color: colorScheme.text,
+      }}
+    >
       <AuthContext.Provider
         value={{ token, setToken, player, setPlayer, deviceID, setDeviceID }}
       >

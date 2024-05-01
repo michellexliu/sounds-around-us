@@ -9,6 +9,7 @@ import AuthContext from '../../lib/AuthContext';
 import { refreshToken } from '../../lib/helpers';
 import { BACKEND_ROOT, items } from '../../lib/constants';
 import WebPlayback from '../../components/WebPlayback/WebPlayback';
+import { useTheme } from '../../lib/ThemeContext';
 
 function View({ playbackReady, setPlaybackReady }) {
   const { token, player, deviceID } = useContext(AuthContext);
@@ -20,6 +21,8 @@ function View({ playbackReady, setPlaybackReady }) {
   const [autoplayFailed, setAutoplayFailed] = useState(false);
   const [is_paused, setPaused] = useState(false);
   const [clickCount, setClickCount] = useState(true);
+
+  const { randomTheme, colorScheme } = useTheme();
 
   // const getToken = () => refreshToken(setToken);
 
@@ -52,6 +55,10 @@ function View({ playbackReady, setPlaybackReady }) {
   useEffect(() => {
     getNewPost();
   }, []);
+
+  useEffect(() => {
+    randomTheme();
+  }, [post]);
 
   const play = ({
     spotify_uri,
@@ -95,6 +102,7 @@ function View({ playbackReady, setPlaybackReady }) {
         exit="hidden"
         className={styles.container}
         key={clickCount}
+        style={{}}
       >
         {currentTrack && currentTrack.artists ? (
           <motion.div

@@ -113,11 +113,9 @@ function Navigation() {
             </p>
           </div>
         </Modal>
-        <div className={styles.top} style={{ color: colorScheme.text }}>
+        <div className={styles.top}>
           {token == null ? (
-            <p style={{ color: colorScheme.text }}>
-              It's Someone's Favorite Song
-            </p>
+            <p>It's Someone's Favorite Song</p>
           ) : (
             <div className={styles.link}>
               <Link
