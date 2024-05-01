@@ -10,11 +10,23 @@ import queryString from 'query-string';
 
 import './App.css';
 import Navigation from './components/Navigation';
+import ThemeContext from './lib/ThemeContext';
+import { COLOR_THEMES } from './lib/constants';
 
 function App() {
   const [token, setToken] = useState(undefined);
   const [player, setPlayer] = useState(undefined);
   const [deviceID, setDeviceID] = useState(undefined);
+  const [theme, setTheme] = useState(undefined);
+
+  const colorScheme =
+    theme == null
+      ? { text: 'black', background: 'white' }
+      : COLOR_THEMES[theme];
+  const randomTheme = () => {
+    const randomIndex = Math.floor(Math.random() * COLOR_THEMES.length);
+    setTheme(randomIndex);
+  };
 
   const [playbackReady, setPlaybackReady] = useState(false);
   const location = useLocation();
@@ -26,13 +38,18 @@ function App() {
     if (!token) {
       if (access_token) setToken(access_token);
       else {
-        console.log('blah');
         navigate('/');
         return;
       }
     }
-    console.log('access_token', access_token);
-  }, [access_token, token]);
+  }, [access_token, token, navigate]);
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setToken(null);
+      setTheme(null);
+    }
+  }, [location]);
 
   useEffect(() => {
     window.onSpotifyWebPlaybackSDKReady = () => {
@@ -65,21 +82,25 @@ function App() {
       <AuthContext.Provider
         value={{ token, setToken, player, setPlayer, deviceID, setDeviceID }}
       >
-        <Navigation />
-        <Routes>
-          <Route exact path="/" element={<Login />} />
-          <Route exact path="/post" element={<Post />} />
-          <Route
-            exact
-            path="/view"
-            element={
-              <View
-                playbackReady={playbackReady}
-                setPlaybackReady={setPlaybackReady}
-              />
-            }
-          />
-        </Routes>
+        <ThemeContext.Provider
+          value={{ theme, setTheme, colorScheme, randomTheme }}
+        >
+          <Navigation />
+          <Routes>
+            <Route exact path="/" element={<Login />} />
+            <Route exact path="/post" element={<Post />} />
+            <Route
+              exact
+              path="/view"
+              element={
+                <View
+                  playbackReady={playbackReady}
+                  setPlaybackReady={setPlaybackReady}
+                />
+              }
+            />
+          </Routes>
+        </ThemeContext.Provider>
       </AuthContext.Provider>
     </div>
   );

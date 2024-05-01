@@ -20,20 +20,31 @@
   align-items: center;
 }
 
-.bottom {
-  bottom: 0;
+.link {
   text-decoration: underline;
+  display: flex;
+  flex-direction: row;
 }
 
-.bottom > div {
+.link:hover {
+  cursor: pointer;
+}
+
+.top {
+  top: 0;
+}
+.bottom {
+  bottom: 0;
+}
+
+.top > div,
+.bottom > div,
+.top > p,
+.bottom > p {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 3vh 2vw;
-}
-
-.container p:hover {
-  cursor: pointer;
+  padding: 16px 24px;
 }
 
 .modalContainer {
