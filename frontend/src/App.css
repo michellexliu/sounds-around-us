@@ -1,3 +1,7 @@
+:root {
+  --dark-grey: #828282;
+}
+
 .container {
   width: 100%;
   height: 100vh;

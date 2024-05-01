@@ -1,3 +1,15 @@
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+}
+.innerContainer {
+  width: 40%;
+}
+
 td {
   padding: 1vh 1.2vw;
 }
@@ -8,10 +20,11 @@ td {
 }
 
 .tracksContainer {
-  width: 60%;
-  height: 40vh;
+  width: 40%;
+  height: 30vh;
   overflow: auto;
   margin-top: 3vh;
+  position: absolute;
 }
 
 .tracks {
@@ -27,10 +40,21 @@ p {
   font-weight: 600;
 }
 
+.refresh {
+  margin-bottom: -5px;
+  margin-left: 7px;
+}
+
+.refresh:hover {
+  cursor: pointer;
+}
+
 .searchPrompt {
   font-size: 2.5em;
   font-family: 'AppleGaramond';
-  letter-spacing: 2%;
+  letter-spacing: 1px;
+  width: 100%;
+  position: relative;
 }
 
 .searchSubtitle {
@@ -42,15 +66,15 @@ p {
 
 .searchContainer {
   padding-top: 2vh;
+  width: 100%;
 }
 
 .search {
   border: none;
   border-bottom: 1px solid black;
-  padding: 1vh 1vw;
+  padding: 1vh 0;
   font-size: 1.5em;
-  text-transform: uppercase;
-  width: 30vw;
+  width: 100%;
 }
 
 .search:focus {

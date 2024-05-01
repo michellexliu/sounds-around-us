@@ -3,9 +3,45 @@ import cn from 'classnames';
 import { TypeAnimation } from 'react-type-animation';
 import debounce from 'lodash.debounce';
 
+import refresh from '../../assets/refresh.svg';
 import styles from './Search.module.css';
 import { fromMS, queryString } from '../../lib/helpers';
 import AuthContext from '../../lib/AuthContext';
+
+export const PROMPTS = [
+  {
+    choice: "that's special to you",
+    question: 'Why is this song special to you? What memories does it hold?',
+  },
+  {
+    choice: 'that reminds you of someone',
+    question:
+      'Who does this song remind you of? Why is this person special to you? How does this song connect you?',
+  },
+  {
+    choice: 'that reminds you of a place',
+    question:
+      'Where does this song remind you of? What makes this place special? How is this song special to this place?',
+  },
+  {
+    choice: 'that reminds you of a moment',
+    question: 'What memories do this song evoke?',
+  },
+  {
+    choice: 'that reminds you everything will be okay',
+    question:
+      'How does this song make you feel? Did it get you through a hard time? How does it give you hope?',
+  },
+  {
+    choice: 'that brings you joy',
+    question: 'Why is this song special to you? What memories does it hold?',
+  },
+  {
+    choice: 'that never gets old',
+    question:
+      'How did this song come into your life? What memories does it hold?',
+  },
+];
 
 function Search({ setSong, setStep }) {
   const { token, setToken } = useContext(AuthContext);
@@ -13,6 +49,8 @@ function Search({ setSong, setStep }) {
 
   const [q, setQ] = useState('');
   const [res, setRes] = useState([]);
+  const [curPrompt, setCurPrompt] = useState(0);
+
   const base = 'https://api.spotify.com/v1/search';
   const headers = new Headers({
     Authorization: 'Bearer ' + token,
@@ -44,82 +82,77 @@ function Search({ setSong, setStep }) {
     setQ(e.target.value);
   };
 
-  return (
-    <>
-      <label className={styles.searchPrompt} htmlFor="track">
-        A song{' '}
-        <TypeAnimation
-          // Same String at the start will only be typed once, initially
-          sequence={[
-            'you love',
-            1000,
-            "that's special to you",
-            1000,
-            'that reminds you of someone',
-            1000,
-            'that reminds you of a place',
-            1000,
-            'that reminds you of a moment',
-            1000,
-            'that reminds you that everything will be okay',
-            1000,
-            'that brings you joy',
-            1000,
-            'that never gets old',
-            1000,
-          ]}
-          speed={40} // Custom Speed from 1-99 - Default Speed: 40
-          wrapper="span" // Animation will be rendered as a <span>
-          repeat={Infinity} // Repeat this Animation Sequence infinitely
-        />
-      </label>
-      <div className={styles.searchContainer}>
-        <input
-          id="track"
-          className={styles.search}
-          type="text"
-          onChange={handleChange}
-          value={q}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') handleSubmit();
-          }}
-          autoComplete="off"
-        />
-        <button
-          onClick={handleSubmit}
-          disabled={q === ''}
-          className={cn(styles.submit, 'btn')}
-        >
-          Search
-        </button>
-      </div>
-      <div className={styles.tracksContainer}>
-        <table className={styles.tracks}>
-          {res?.map(({ album, artists, duration_ms, name, id }, index) => {
-            const key = `${q} option ${index}`;
-            const image = album.images[album.images.length - 1].url;
-            const artistStr = artists.map(({ name }) => name).join(', ');
-            const albumName = album.name;
+  useEffect(() => {
+    console.log(curPrompt);
+  }, [curPrompt]);
 
-            return (
-              <Track
-                image={image}
-                artists={artistStr}
-                album={albumName}
-                duration_ms={duration_ms}
-                key={key}
-                name={name}
-                onClick={() => {
-                  console.log('id', id);
-                  setSong({ id, name, artists: artistStr });
-                  setStep('compose');
-                }}
-              />
-            );
-          })}
-        </table>
+  return (
+    <div className={styles.container}>
+      <div className={styles.innerContainer}>
+        <p className={styles.searchPrompt}>
+          A song{' '}
+          <TypeAnimation
+            // Same String at the start will only be typed once, initially
+            sequence={[PROMPTS[curPrompt].choice, 200]}
+            speed={40} // Custom Speed from 1-99 - Default Speed: 40
+            key={curPrompt}
+            wrapper="span"
+            cursor={false}
+          />
+          <img
+            alt="refresh prompt"
+            src={refresh}
+            width="30px"
+            height="30px"
+            className={styles.refresh}
+            onClick={() => setCurPrompt((curPrompt + 1) % PROMPTS.length)}
+          />
+        </p>
+        <div className={styles.searchContainer}>
+          <input
+            id="track"
+            className={styles.search}
+            type="text"
+            onChange={handleChange}
+            value={q}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSubmit();
+            }}
+            autoComplete="off"
+          />
+        </div>
+        <div className={styles.tracksContainer}>
+          <table className={styles.tracks}>
+            {res?.map(({ album, artists, duration_ms, name, id }, index) => {
+              const key = `${q} option ${index}`;
+              const image = album.images[album.images.length - 1].url;
+              const artistStr = artists.map(({ name }) => name).join(', ');
+              const albumName = album.name;
+
+              return (
+                <Track
+                  image={image}
+                  artists={artistStr}
+                  album={albumName}
+                  duration_ms={duration_ms}
+                  key={key}
+                  name={name}
+                  onClick={() => {
+                    setSong({
+                      id,
+                      name,
+                      artists: artistStr,
+                      question: PROMPTS[curPrompt].question,
+                    });
+                    setStep('compose');
+                  }}
+                />
+              );
+            })}
+          </table>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 

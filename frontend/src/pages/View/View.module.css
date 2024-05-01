@@ -36,7 +36,7 @@
   white-space: pre-line;
   height: 60vh;
   overflow: auto;
-  letter-spacing: 2%;
+  letter-spacing: 1px;
 }
 
 .body:hover {

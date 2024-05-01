@@ -19,7 +19,7 @@ h1 {
   font-size: 2em;
   font-family: AppleGaramond;
   margin-bottom: 2vh;
-  letter-spacing: 2%;
+  letter-spacing: 1px;
 }
 .subtext span {
   font-size: 1em !important;

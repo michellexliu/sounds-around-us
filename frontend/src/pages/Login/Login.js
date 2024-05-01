@@ -23,17 +23,15 @@ function Login() {
           <TypeAnimation
             // Same String at the start will only be typed once, initially
             sequence={[
-              'love',
-              2000,
               'joy',
-              2000,
-              'heartbreak',
               2000,
               'hope',
               2000,
-              'grief',
+              'love',
               2000,
-              'optimism',
+              'heartbreak',
+              2000,
+              'grief',
               2000,
               'nostalgia',
               2000,

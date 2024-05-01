@@ -1,37 +1,40 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
-import styles from "./Compose.module.css";
-import { fromMS } from "../../lib/helpers";
-import AuthContext from "../../lib/AuthContext";
+import styles from './Compose.module.css';
+import { fromMS } from '../../lib/helpers';
+import AuthContext from '../../lib/AuthContext';
+import back from '../../assets/back.svg';
 
 function Compose({ setPost, setStep, song }) {
   const { token, setToken } = useContext(AuthContext);
-  const [body, setBody] = useState("");
+  const [body, setBody] = useState('');
 
   return (
     <div className={styles.container}>
-      <h1>
-        Song: {song.name} - {song.artists}
-      </h1>
-      <button
+      <h1
         onClick={() => {
-          setStep("search");
+          setStep('search');
         }}
-        className="btn"
       >
-        Select a different song
-      </button>
+        <img
+          alt="refresh prompt"
+          src={back}
+          width="24px"
+          height="24px"
+          className={styles.back}
+        />
+        {song.name} - {song.artists}
+      </h1>
       <form
         className="form-group compose-form"
         action="/submit"
         method="post"
         autoComplete="off"
+        style={{ display: 'flex', flexDirection: 'column', width: '100%' }}
       >
         <input name="song" value={song.id} hidden readOnly></input>
         <label className={styles.prompt} htmlFor="message">
-          Tell us about this song. What does it mean to you? Who does it remind
-          you of? How does it make you feel? Where does it take you? When did it
-          come into your life?
+          Tell us about this song. {song.question}
         </label>
         <br />
         <textarea
@@ -42,11 +45,12 @@ function Compose({ setPost, setStep, song }) {
           required
         ></textarea>
         <button
-          disabled={!body || body === ""}
+          disabled={!body || body === ''}
           className="compose-btn btn btn-primary"
           type="submit"
+          style={{ alignSelf: 'flex-end', marginRight: '0px' }}
         >
-          Post
+          Submit
         </button>
       </form>
     </div>
