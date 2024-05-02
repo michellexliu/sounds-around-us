@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import cn from 'classnames';
+import spotify from '../../assets/spotify-logo.png';
 
 import styles from './WebPlayback.module.css';
 import { LAYOUTS } from '../../lib/constants';
@@ -29,7 +29,6 @@ function WebPlayback({
       if (!state) {
         return;
       }
-      console.log('state changed', state);
 
       setCurrentTrack(state.track_window.current_track);
       setPaused(state.paused);
@@ -64,9 +63,11 @@ function WebPlayback({
       style={positions.album}
     >
       <img
+        className={styles.albumCover}
         src={currentTrack?.album?.images[0].url}
         alt={`album cover for ${currentTrack?.album?.name}`}
       />
+      <img src={spotify} alt={`spotify logo`} className={styles.logo} />
     </div>
   );
 }

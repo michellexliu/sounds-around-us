@@ -1,7 +1,6 @@
 import React from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
 
 import styles from './Login.module.css';
 

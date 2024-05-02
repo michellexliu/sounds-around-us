@@ -90,9 +90,7 @@ function Search({ setSong, setStep }) {
 
   return (
     <motion.div
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
+      exit={{ opacity: 0 }}
       variants={items}
       className={styles.container}
       key="search"

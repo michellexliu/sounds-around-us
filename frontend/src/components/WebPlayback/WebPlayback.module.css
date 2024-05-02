@@ -16,13 +16,21 @@
   font-weight: 600;
 }
 
-.album img {
+.albumCover {
   width: 330px;
   height: 330px;
+}
+.logo {
+  height: 30px;
+  margin-top: 15px;
 }
 
 .album {
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .album:hover {

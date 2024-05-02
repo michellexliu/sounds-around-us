@@ -32,8 +32,6 @@ function View() {
     Authorization: 'Bearer ' + token,
   });
 
-  const textWidth = useRef(null);
-
   async function getSong(id) {
     const response = await fetch(`${base}/${id}`, {
       headers,
@@ -49,6 +47,7 @@ function View() {
     setClickCount(clickCount + 1);
     async function getPost() {
       const response = await axios.get(`${BACKEND_ROOT}/post`);
+      console.log(response?.data?.result);
       setPost(response?.data?.result);
     }
 
@@ -86,11 +85,15 @@ function View() {
         getSong(track).then((res) => {
           setTrackInfo(res);
           setCurrentTrack(res);
-          console.log(res);
+          console.log(res.external_urls.spotify);
         });
       }
     }
   }, [post]);
+
+  useEffect(() => {
+    randomTheme();
+  }, [shown]);
 
   return (
     <AnimatePresence mode="wait" onExitComplete={randomTheme}>
@@ -106,19 +109,22 @@ function View() {
           key={clickCount}
         >
           {currentTrack && currentTrack.artists ? (
-            <motion.div
+            <motion.a
+              href={trackInfo?.external_urls?.spotify}
+              target="_blank"
+              rel="noreferrer"
               initial="hidden"
               animate="visible"
               transition={{ duration: 2.5 }}
               className={styles.nameBanner}
             >
               <Marquee speed={150}>
-                <h1>
+                <h1 className={styles.trackName}>
                   {currentTrack?.name} - {currentTrack?.artists[0].name}
                   &nbsp;&nbsp;
                 </h1>
               </Marquee>
-            </motion.div>
+            </motion.a>
           ) : (
             <motion.div
               initial={{ opacity: 0 }}

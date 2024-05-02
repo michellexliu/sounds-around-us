@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import Modal from 'react-modal';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -13,6 +14,8 @@ function Navigation() {
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
 
   const { colorScheme } = useTheme();
+
+  const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
@@ -118,18 +121,27 @@ function Navigation() {
             <p>It's Someone's Favorite Song</p>
           ) : (
             <div className={styles.link}>
-              <Link
-                to="/post"
-                style={{ paddingRight: 20, color: colorScheme.text }}
-              >
-                Submit a Song
-              </Link>
-              <Link
+              {location.pathname.includes('view') ? (
+                <Link
+                  to="/post"
+                  style={{ paddingRight: 20, color: colorScheme.text }}
+                >
+                  Submit a Song
+                </Link>
+              ) : (
+                <Link
+                  to="/view"
+                  style={{ paddingRight: 20, color: colorScheme.text }}
+                >
+                  View Submissions
+                </Link>
+              )}
+              {/* <Link
                 to="/"
                 style={{ paddingRight: 20, color: colorScheme.text }}
               >
                 Browse
-              </Link>
+              </Link> */}
             </div>
           )}
           <div className={styles.link}>

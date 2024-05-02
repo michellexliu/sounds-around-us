@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import styles from './Post.module.css';
 import AuthContext from '../../lib/AuthContext';
@@ -17,11 +17,19 @@ function Post() {
   return (
     <div className={styles.container}>
       <AnimatePresence mode="wait">
-        {step === 'search' ? (
-          <Search setSong={setSong} setStep={setStep} />
-        ) : (
-          <Compose setPost={setPost} setStep={setStep} song={song} />
-        )}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 3 }}
+          className={styles.container}
+          key={step}
+        >
+          {step === 'search' ? (
+            <Search setSong={setSong} setStep={setStep} />
+          ) : (
+            <Compose setPost={setPost} setStep={setStep} song={song} />
+          )}
+        </motion.div>
       </AnimatePresence>
     </div>
   );

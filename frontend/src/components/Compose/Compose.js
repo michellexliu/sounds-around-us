@@ -1,13 +1,25 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './Compose.module.css';
-import { fromMS } from '../../lib/helpers';
 import AuthContext from '../../lib/AuthContext';
 import back from '../../assets/back.svg';
+import { BACKEND_ROOT } from '../../lib/constants';
 
 function Compose({ setPost, setStep, song }) {
   const { token, setToken } = useContext(AuthContext);
   const [body, setBody] = useState('');
+  const navigate = useNavigate();
+
+  const onClick = async () => {
+    const response = await axios.post(`${BACKEND_ROOT}/submit`, {
+      song: song.id,
+      message: body,
+    });
+    setPost(response.data.result);
+    navigate('/view');
+  };
 
   return (
     <div className={styles.container}>
@@ -25,11 +37,8 @@ function Compose({ setPost, setStep, song }) {
         />
         {song.name} - {song.artists}
       </h1>
-      <form
+      <div
         className="form-group compose-form"
-        action="/submit"
-        method="post"
-        autoComplete="off"
         style={{ display: 'flex', flexDirection: 'column', width: '100%' }}
       >
         <input name="song" value={song.id} hidden readOnly></input>
@@ -49,10 +58,11 @@ function Compose({ setPost, setStep, song }) {
           className="compose-btn btn btn-primary"
           type="submit"
           style={{ alignSelf: 'flex-end', marginRight: '0px' }}
+          onClick={onClick}
         >
           Submit
         </button>
-      </form>
+      </div>
     </div>
   );
 }
