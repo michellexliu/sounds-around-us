@@ -30,18 +30,23 @@ export const PROMPTS = [
     question: 'What memories do this song evoke?',
   },
   {
+    choice: 'that brings you joy',
+    question: 'Why is this song special to you? What memories does it hold?',
+  },
+  {
     choice: 'that reminds you everything will be okay',
     question:
       'How does this song make you feel? Did it get you through a hard time? How does it give you hope?',
   },
   {
-    choice: 'that brings you joy',
-    question: 'Why is this song special to you? What memories does it hold?',
-  },
-  {
     choice: 'that never gets old',
     question:
       'How did this song come into your life? What memories does it hold?',
+  },
+  {
+    choice: 'that you relate to',
+    question:
+      'Why do you feel connected to this song? What does it mean to you?',
   },
 ];
 
@@ -57,6 +62,7 @@ function Search({ setSong, setStep }) {
   const headers = new Headers({
     Authorization: 'Bearer ' + token,
   });
+  console.log(headers);
 
   async function search(q) {
     const response = await fetch(

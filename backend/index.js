@@ -55,7 +55,7 @@ app.listen(PORT, () => {
 
 // mongoose.connect('mongodb://localhost:27017/songs2');
 mongoose.connect(
-  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PW}@serverlessinstance0.dkwqfur.mongodb.net/dongs`
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PW}@serverlessinstance0.dkwqfur.mongodb.net/songs`
 );
 const postSchema = new mongoose.Schema({
   body: String,
