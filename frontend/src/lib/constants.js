@@ -1,3 +1,8 @@
+import boombox from '../assets/boombox.png';
+import musicplayer from '../assets/musicplayer.png';
+import radio from '../assets/radio.png';
+import recordplayer from '../assets/recordplayer.png';
+
 export const items = {
   hidden: {
     filter: 'blur(10px)',
@@ -25,15 +30,27 @@ export const items = {
 
 export const COLOR_THEMES = [
   {
-    text: '#B2C1DE',
-    background: '#4F2E2D',
+    background: '#2B3656',
+    text: '#F79423',
+  },
+  {
+    background: '#D98F2D',
+    text: '#392F27',
+  },
+  {
+    background: '#FFC226',
+    text: '#F54505',
+  },
+  {
+    text: '#F46004',
+    background: '#CAD0C7',
   },
   {
     text: '#576FD7',
     background: '#E3D9CC',
   },
   {
-    text: '#7E7F2D',
+    text: '#462C2C',
     background: '#E8BE2C',
   },
   {
@@ -106,5 +123,7 @@ export const LAYOUTS = [
     },
   },
 ];
+
+export const ASCII_ART = [boombox, radio, recordplayer, musicplayer];
 
 export const BACKEND_ROOT = 'http://localhost:3001';

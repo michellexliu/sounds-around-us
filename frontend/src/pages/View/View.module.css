@@ -75,6 +75,16 @@
   margin-top: 2vh;
 }
 
+.ascii {
+  width: 700px;
+  height: 600px;
+  object-fit: contain;
+  position: fixed;
+  top: 30%;
+  right: 100px;
+  opacity: 0.3;
+}
+
 @media only screen and (max-width: 768px) {
   h1 {
     font-size: 2em;

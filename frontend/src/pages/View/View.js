@@ -8,7 +8,7 @@ import Marquee from 'react-fast-marquee';
 import styles from './View.module.css';
 import WebPlayback from '../../components/WebPlayback/WebPlayback';
 import AuthContext from '../../lib/AuthContext';
-import { BACKEND_ROOT, LAYOUTS, items } from '../../lib/constants';
+import { ASCII_ART, BACKEND_ROOT, LAYOUTS, items } from '../../lib/constants';
 import { useTheme } from '../../lib/ThemeContext';
 
 function View({ playbackReady, setPlaybackReady }) {
@@ -33,20 +33,6 @@ function View({ playbackReady, setPlaybackReady }) {
 
   const textWidth = useRef(null);
 
-  const scrollVariants = {
-    animate: {
-      x: [0, -(textWidth.current?.offsetWidth || 0)],
-      transition: {
-        x: {
-          repeat: Infinity,
-          repeatType: 'loop',
-          duration: 10, // Adjust duration to control the speed of the scrolling
-          ease: 'linear',
-        },
-      },
-    },
-  };
-
   async function getSong(id) {
     const response = await fetch(`${base}/${id}`, {
       headers,
@@ -56,10 +42,10 @@ function View({ playbackReady, setPlaybackReady }) {
   }
 
   const getNewPost = () => {
-    setClickCount(clickCount + 1);
     // if (!token) {
     //   getToken();
     // }
+    setClickCount(clickCount + 1);
     async function getPost() {
       const response = await axios.get(`${BACKEND_ROOT}/post`);
       setPost(response?.data?.result);
@@ -71,10 +57,6 @@ function View({ playbackReady, setPlaybackReady }) {
   useEffect(() => {
     getNewPost();
   }, []);
-
-  useEffect(() => {
-    randomTheme();
-  }, [post]);
 
   const play = ({
     spotify_uri,
@@ -110,7 +92,7 @@ function View({ playbackReady, setPlaybackReady }) {
   }, [post]);
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" onExitComplete={randomTheme}>
       <motion.div
         variants={items}
         initial="hidden"
@@ -118,7 +100,6 @@ function View({ playbackReady, setPlaybackReady }) {
         exit="hidden"
         className={styles.container}
         key={clickCount}
-        style={{}}
       >
         {currentTrack && currentTrack.artists ? (
           <motion.div
