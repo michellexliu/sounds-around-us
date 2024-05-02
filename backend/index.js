@@ -53,10 +53,10 @@ app.listen(PORT, () => {
   console.log('started');
 });
 
-mongoose.connect('mongodb://localhost:27017/songs');
-// mongoose.connect(
-//   `mongodb+srv://mxliu:${process.env.DB_PW}@cluster0.yjrtuah.mongodb.net/songs`
-// );
+// mongoose.connect('mongodb://localhost:27017/songs2');
+mongoose.connect(
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PW}@serverlessinstance0.dkwqfur.mongodb.net/dongs`
+);
 const postSchema = new mongoose.Schema({
   body: String,
   date: Date,
