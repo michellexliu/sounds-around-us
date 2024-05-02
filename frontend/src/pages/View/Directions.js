@@ -41,9 +41,18 @@ const Directions = () => {
             style={{ width: '40%' }}
           >
             <p className={styles.instructions}>
-              Welcome to <i>It's Someone's Favorite Song</i>
+              <i>It's Someone's Favorite Song</i>
             </p>
             <p className={styles.instructionsSubtitle}>
+              Content Warning: Some submisisons may contain references to
+              sensitive topics, such as trauma, suicidal ideation, and sexual
+              assault. If these topics are triggering for you, please proceed
+              with caution.
+            </p>
+            <p
+              className={styles.instructionsSubtitle}
+              style={{ marginTop: '20px' }}
+            >
               To switch between submissions, click or tap the submission text.
               To play or pause audio, click or tap the album cover.
             </p>

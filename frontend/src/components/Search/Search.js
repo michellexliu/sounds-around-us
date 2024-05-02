@@ -51,7 +51,7 @@ export const PROMPTS = [
 ];
 
 function Search({ setSong, setStep }) {
-  const { token } = useContext(AuthContext);
+  const { token, play, player } = useContext(AuthContext);
   console.log('token', token);
 
   const [q, setQ] = useState('');
@@ -136,32 +136,38 @@ function Search({ setSong, setStep }) {
         </div>
         <div className={styles.tracksContainer}>
           <table className={styles.tracks}>
-            {res?.map(({ album, artists, duration_ms, name, id }, index) => {
-              const key = id;
-              const image = album.images[album.images.length - 1].url;
-              const artistStr = artists.map(({ name }) => name).join(', ');
-              const albumName = album.name;
+            {res?.map(
+              ({ album, artists, duration_ms, name, id, uri }, index) => {
+                const key = id;
+                const image = album.images[album.images.length - 1].url;
+                const artistStr = artists.map(({ name }) => name).join(', ');
+                const albumName = album.name;
 
-              return (
-                <Track
-                  image={image}
-                  artists={artistStr}
-                  album={albumName}
-                  duration_ms={duration_ms}
-                  key={key}
-                  name={name}
-                  onClick={() => {
-                    setSong({
-                      id,
-                      name,
-                      artists: artistStr,
-                      question: PROMPTS[curPrompt].question,
-                    });
-                    setStep('compose');
-                  }}
-                />
-              );
-            })}
+                return (
+                  <Track
+                    image={image}
+                    artists={artistStr}
+                    album={albumName}
+                    duration_ms={duration_ms}
+                    key={key}
+                    name={name}
+                    onClick={() => {
+                      play({
+                        playerInstance: player,
+                        spotify_uri: uri,
+                      });
+                      setSong({
+                        id,
+                        name,
+                        artists: artistStr,
+                        question: PROMPTS[curPrompt].question,
+                      });
+                      setStep('compose');
+                    }}
+                  />
+                );
+              }
+            )}
           </table>
         </div>
       </div>

@@ -9,7 +9,6 @@ import AuthContext from '../../lib/AuthContext';
 function WebPlayback({
   track,
   player,
-  play,
   currentTrack,
   setCurrentTrack,
   setAutoplayFailed,
@@ -18,7 +17,7 @@ function WebPlayback({
 }) {
   const [is_active, setActive] = useState(false);
   const { positions } = useTheme();
-  const { shown } = useContext(AuthContext);
+  const { shown, play } = useContext(AuthContext);
 
   useEffect(() => {
     player.addListener('autoplay_failed', () => {

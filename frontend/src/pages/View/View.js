@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,12 +8,12 @@ import Marquee from 'react-fast-marquee';
 import styles from './View.module.css';
 import WebPlayback from '../../components/WebPlayback/WebPlayback';
 import AuthContext from '../../lib/AuthContext';
-import { ASCII_ART, BACKEND_ROOT, items } from '../../lib/constants';
+import { BACKEND_ROOT, items } from '../../lib/constants';
 import { useTheme } from '../../lib/ThemeContext';
 import Directions from './Directions';
 
 function View() {
-  const { token, player, deviceID, shown, setShown } = useContext(AuthContext);
+  const { token, player, deviceID, shown } = useContext(AuthContext);
 
   const [post, setPost] = useState(undefined);
   const [body, setBody] = useState(undefined);
@@ -41,9 +41,6 @@ function View() {
   }
 
   const getNewPost = () => {
-    // if (!token) {
-    //   getToken();
-    // }
     setClickCount(clickCount + 1);
     async function getPost() {
       const response = await axios.get(`${BACKEND_ROOT}/post`);
@@ -118,7 +115,7 @@ function View() {
               transition={{ duration: 2.5 }}
               className={styles.nameBanner}
             >
-              <Marquee speed={150}>
+              <Marquee key={currentTrack?.name} speed={150}>
                 <h1 className={styles.trackName}>
                   {currentTrack?.name} - {currentTrack?.artists[0].name}
                   &nbsp;&nbsp;
@@ -149,7 +146,6 @@ function View() {
               <WebPlayback
                 track={trackInfo}
                 player={player}
-                play={play}
                 currentTrack={currentTrack}
                 setCurrentTrack={setCurrentTrack}
                 setAutoplayFailed={setAutoplayFailed}

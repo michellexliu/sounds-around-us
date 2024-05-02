@@ -15,7 +15,8 @@ function Compose({ setPost, setStep, song }) {
       song: song.id,
       message: body,
     });
-    setPost(response.data.result);
+    console.log(response.data);
+    setPost(response.data);
     navigate('/view');
   };
 
