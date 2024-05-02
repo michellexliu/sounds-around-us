@@ -54,4 +54,57 @@ export const COLOR_THEMES = [
   },
 ];
 
+export const LAYOUTS = [
+  {
+    text: {
+      top: '22vh',
+      left: '3vw',
+      width: '60%',
+      height: '40vh',
+    },
+    album: {
+      right: '3vw',
+      bottom: '23vh',
+    },
+  },
+  {
+    text: {
+      top: '10vh',
+      left: '3vw',
+      width: '60%',
+      height: '50vh',
+    },
+    album: {
+      right: '8vw',
+      bottom: '25vh',
+    },
+  },
+  {
+    text: {
+      top: '10vh',
+      right: '3vw',
+      width: '60%',
+      height: '70vh',
+      textAlign: 'left',
+    },
+    album: {
+      left: '8vw',
+      bottom: '25vh',
+    },
+  },
+  {
+    text: {
+      top: '20vh',
+      right: '3vw',
+      width: '60%',
+      textAlign: 'left',
+      height: '40vh',
+    },
+    album: {
+      left: '8vw',
+      bottom: '25vh',
+    },
+  },
+];
+
 export const BACKEND_ROOT = 'http://localhost:3001';

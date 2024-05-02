@@ -8,7 +8,7 @@ import Marquee from 'react-fast-marquee';
 import styles from './View.module.css';
 import WebPlayback from '../../components/WebPlayback/WebPlayback';
 import AuthContext from '../../lib/AuthContext';
-import { BACKEND_ROOT, items } from '../../lib/constants';
+import { BACKEND_ROOT, LAYOUTS, items } from '../../lib/constants';
 import { useTheme } from '../../lib/ThemeContext';
 
 function View({ playbackReady, setPlaybackReady }) {
@@ -22,7 +22,7 @@ function View({ playbackReady, setPlaybackReady }) {
   const [is_paused, setPaused] = useState(false);
   const [clickCount, setClickCount] = useState(true);
 
-  const { randomTheme, colorScheme } = useTheme();
+  const { randomTheme, positions } = useTheme();
 
   // const getToken = () => refreshToken(setToken);
 
@@ -168,7 +168,10 @@ function View({ playbackReady, setPlaybackReady }) {
             <p
               className={styles.body}
               onClick={getNewPost}
-              style={{ fontSize: body.length > 1000 ? '32px' : '48px' }}
+              style={{
+                fontSize: body.length > 600 ? '32px' : '48px',
+                ...positions.text,
+              }}
             >
               {body}
             </p>

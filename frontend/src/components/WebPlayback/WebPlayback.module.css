@@ -23,8 +23,6 @@
 
 .album {
   position: fixed;
-  top: 25vh;
-  right: 5%;
 }
 
 .album:hover {

@@ -11,21 +11,27 @@ import queryString from 'query-string';
 import './App.css';
 import Navigation from './components/Navigation';
 import ThemeContext from './lib/ThemeContext';
-import { COLOR_THEMES } from './lib/constants';
+import { COLOR_THEMES, LAYOUTS } from './lib/constants';
 
 function App() {
   const [token, setToken] = useState(undefined);
   const [player, setPlayer] = useState(undefined);
   const [deviceID, setDeviceID] = useState(undefined);
   const [theme, setTheme] = useState(undefined);
+  const [layout, setLayout] = useState(0);
 
   const colorScheme =
     theme == null
       ? { text: 'black', background: 'white' }
       : COLOR_THEMES[theme];
+
+  const positions = LAYOUTS[layout];
+
   const randomTheme = () => {
     const randomIndex = Math.floor(Math.random() * COLOR_THEMES.length);
     setTheme(randomIndex);
+    const randomLayout = Math.floor(Math.random() * LAYOUTS.length);
+    setLayout(randomLayout);
   };
 
   const [playbackReady, setPlaybackReady] = useState(false);
@@ -85,14 +91,14 @@ function App() {
       style={{
         backgroundColor: colorScheme.background,
         color: colorScheme.text,
-        transition: 'background-color 2s color 2s',
+        transition: 'background-color 2s',
       }}
     >
       <AuthContext.Provider
         value={{ token, setToken, player, setPlayer, deviceID, setDeviceID }}
       >
         <ThemeContext.Provider
-          value={{ theme, setTheme, colorScheme, randomTheme }}
+          value={{ theme, setTheme, colorScheme, randomTheme, positions }}
         >
           <Navigation />
           <Routes>

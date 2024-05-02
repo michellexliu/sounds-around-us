@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 
 import styles from './WebPlayback.module.css';
+import { LAYOUTS } from '../../lib/constants';
+import { useTheme } from '../../lib/ThemeContext';
 
 function WebPlayback({
   track,
@@ -14,6 +16,7 @@ function WebPlayback({
   setPaused,
 }) {
   const [is_active, setActive] = useState(false);
+  const { positions } = useTheme();
 
   useEffect(() => {
     player.addListener('autoplay_failed', () => {
@@ -49,24 +52,19 @@ function WebPlayback({
   }, [track]);
 
   return (
-    <div className={styles.container}>
-      <div className="main-wrapper">
-        <div
-          className={styles.wrap}
-          onClick={() => {
-            player.togglePlay();
-            setPaused(!is_paused);
-            setAutoplayFailed(false);
-          }}
-        >
-          <div className={styles.album}>
-            <img
-              src={currentTrack?.album?.images[0].url}
-              alt={`album cover for ${currentTrack?.album?.name}`}
-            />
-          </div>
-        </div>
-      </div>
+    <div
+      className={styles.album}
+      onClick={() => {
+        player.togglePlay();
+        setPaused(!is_paused);
+        setAutoplayFailed(false);
+      }}
+      style={positions.album}
+    >
+      <img
+        src={currentTrack?.album?.images[0].url}
+        alt={`album cover for ${currentTrack?.album?.name}`}
+      />
     </div>
   );
 }
