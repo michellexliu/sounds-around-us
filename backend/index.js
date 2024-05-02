@@ -13,7 +13,7 @@ require('dotenv').config();
 const client_id = process.env.CLIENT_ID; // Your client id
 const client_secret = process.env.CLIENT_SECRET; // Your client id
 console.log(client_id);
-const scope = 'streaming user-read-private user-read-email';
+const scope = 'streaming user-read-private';
 const redirect_uri =
   process.env.REDIRECT_URI || `http://localhost:${PORT}/auth/callback`;
 const frontend_redirect =
@@ -43,10 +43,27 @@ const sendRes = (res) => (err, posts) => {
   }
 };
 
+const allowedOrigins = [
+  'https://itssomeonesfavoritesong.com',
+  'http://localhost:3000',
+]; // Replace example.com with your frontend endpoint
+// Configure CORS
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Check if the origin is in the allowed list
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Allow cookies to be sent to/from the frontend
+};
+
 app
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
-  .use(cors())
+  .use(cors(corsOptions))
   .use(cookieParser());
 
 app.listen(PORT, () => {
