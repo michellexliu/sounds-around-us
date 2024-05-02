@@ -34,11 +34,11 @@ export const COLOR_THEMES = [
     text: '#F79423',
   },
   {
-    background: '#D98F2D',
+    background: '#EFC64E',
     text: '#392F27',
   },
   {
-    background: '#FFC226',
+    background: '#FFED99',
     text: '#F54505',
   },
   {
@@ -68,6 +68,10 @@ export const COLOR_THEMES = [
   {
     text: '#F7DAE4',
     background: '#C07138',
+  },
+  {
+    text: '#F15922',
+    background: '#D3CEC2',
   },
 ];
 

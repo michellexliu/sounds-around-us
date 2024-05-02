@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import cn from 'classnames';
 
 import styles from './WebPlayback.module.css';
 import { LAYOUTS } from '../../lib/constants';
 import { useTheme } from '../../lib/ThemeContext';
+import AuthContext from '../../lib/AuthContext';
 
 function WebPlayback({
   track,
@@ -17,6 +18,7 @@ function WebPlayback({
 }) {
   const [is_active, setActive] = useState(false);
   const { positions } = useTheme();
+  const { shown } = useContext(AuthContext);
 
   useEffect(() => {
     player.addListener('autoplay_failed', () => {
@@ -49,7 +51,7 @@ function WebPlayback({
       playerInstance: player,
       spotify_uri: track.uri,
     });
-  }, [track]);
+  }, [track, shown]);
 
   return (
     <div

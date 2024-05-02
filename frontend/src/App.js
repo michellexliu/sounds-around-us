@@ -19,6 +19,7 @@ function App() {
   const [deviceID, setDeviceID] = useState(undefined);
   const [theme, setTheme] = useState(undefined);
   const [layout, setLayout] = useState(0);
+  const [shown, setShown] = useState(true);
 
   const colorScheme =
     theme == null
@@ -95,7 +96,16 @@ function App() {
       }}
     >
       <AuthContext.Provider
-        value={{ token, setToken, player, setPlayer, deviceID, setDeviceID }}
+        value={{
+          shown,
+          setShown,
+          token,
+          setToken,
+          player,
+          setPlayer,
+          deviceID,
+          setDeviceID,
+        }}
       >
         <ThemeContext.Provider
           value={{ theme, setTheme, colorScheme, randomTheme, positions }}

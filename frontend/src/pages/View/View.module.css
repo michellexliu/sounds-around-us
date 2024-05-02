@@ -52,7 +52,25 @@
   text-align: right;
 }
 
-.body:hover {
+.instructions,
+.instructionsSubtitle {
+  font-family: 'AppleGaramond';
+
+  text-align: center;
+}
+.instructions {
+  font-size: 32px;
+  color: black !important;
+}
+.instructionsSubtitle {
+  font-size: 24px;
+  text-align: center;
+  color: var(--dark-grey) !important;
+}
+
+.body:hover,
+.instructions:hover,
+.instructionsSubtitle:hover {
   cursor: pointer;
 }
 

@@ -8,11 +8,12 @@ import Marquee from 'react-fast-marquee';
 import styles from './View.module.css';
 import WebPlayback from '../../components/WebPlayback/WebPlayback';
 import AuthContext from '../../lib/AuthContext';
-import { ASCII_ART, BACKEND_ROOT, LAYOUTS, items } from '../../lib/constants';
+import { BACKEND_ROOT, items } from '../../lib/constants';
 import { useTheme } from '../../lib/ThemeContext';
+import Directions from './Directions';
 
 function View({ playbackReady, setPlaybackReady }) {
-  const { token, player, deviceID } = useContext(AuthContext);
+  const { token, player, deviceID, shown, setShown } = useContext(AuthContext);
 
   const [post, setPost] = useState(undefined);
   const [body, setBody] = useState(undefined);
@@ -93,6 +94,7 @@ function View({ playbackReady, setPlaybackReady }) {
 
   return (
     <AnimatePresence mode="wait" onExitComplete={randomTheme}>
+      <Directions />
       <motion.div
         variants={items}
         initial="hidden"
