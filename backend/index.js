@@ -156,14 +156,12 @@ app.get('/auth/token', (req, res) => {
 app.post('/submit', (req, res) => {
   console.log(req.body);
   const { song, message } = req.body;
-  Post.create({
+  const post = Post.create({
     track: song,
     body: message,
     date: Date.now(),
-  }).then((posts) => {
-    console.log(posts);
-    res.redirect(`${frontend_redirect}/#/view`);
   });
+  res.json(post);
 });
 
 app.get('/heartbeat', (req, res) => {
