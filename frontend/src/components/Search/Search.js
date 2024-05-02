@@ -2,11 +2,13 @@ import React, { useState, useContext, useEffect } from 'react';
 import cn from 'classnames';
 import { TypeAnimation } from 'react-type-animation';
 import debounce from 'lodash.debounce';
+import { motion } from 'framer-motion';
 
 import refresh from '../../assets/refresh.svg';
 import styles from './Search.module.css';
 import { fromMS, queryString } from '../../lib/helpers';
 import AuthContext from '../../lib/AuthContext';
+import { items } from '../../lib/constants';
 
 export const PROMPTS = [
   {
@@ -44,7 +46,7 @@ export const PROMPTS = [
 ];
 
 function Search({ setSong, setStep }) {
-  const { token, setToken } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   console.log('token', token);
 
   const [q, setQ] = useState('');
@@ -87,7 +89,14 @@ function Search({ setSong, setStep }) {
   }, [curPrompt]);
 
   return (
-    <div className={styles.container}>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      variants={items}
+      className={styles.container}
+      key="search"
+    >
       <div className={styles.innerContainer}>
         <p className={styles.searchPrompt}>
           A song{' '}
@@ -124,7 +133,7 @@ function Search({ setSong, setStep }) {
         <div className={styles.tracksContainer}>
           <table className={styles.tracks}>
             {res?.map(({ album, artists, duration_ms, name, id }, index) => {
-              const key = `${q} option ${index}`;
+              const key = id;
               const image = album.images[album.images.length - 1].url;
               const artistStr = artists.map(({ name }) => name).join(', ');
               const albumName = album.name;
@@ -152,7 +161,7 @@ function Search({ setSong, setStep }) {
           </table>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

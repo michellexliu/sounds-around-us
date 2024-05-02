@@ -8,11 +8,11 @@ import Marquee from 'react-fast-marquee';
 import styles from './View.module.css';
 import WebPlayback from '../../components/WebPlayback/WebPlayback';
 import AuthContext from '../../lib/AuthContext';
-import { BACKEND_ROOT, items } from '../../lib/constants';
+import { ASCII_ART, BACKEND_ROOT, items } from '../../lib/constants';
 import { useTheme } from '../../lib/ThemeContext';
 import Directions from './Directions';
 
-function View({ playbackReady, setPlaybackReady }) {
+function View() {
   const { token, player, deviceID, shown, setShown } = useContext(AuthContext);
 
   const [post, setPost] = useState(undefined);
@@ -94,73 +94,76 @@ function View({ playbackReady, setPlaybackReady }) {
 
   return (
     <AnimatePresence mode="wait" onExitComplete={randomTheme}>
+      {/* <img src={ASCII_ART[0]} alt="music player" className={styles.ascii} /> */}
       <Directions />
-      <motion.div
-        variants={items}
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
-        className={styles.container}
-        key={clickCount}
-      >
-        {currentTrack && currentTrack.artists ? (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            transition={{ duration: 2.5 }}
-            className={styles.nameBanner}
-          >
-            <Marquee speed={150}>
-              <h1>
-                {currentTrack?.name} - {currentTrack?.artists[0].name}
-                &nbsp;&nbsp;
-              </h1>
-            </Marquee>
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2.5 }}
-            className={styles.text}
-          >
-            <p>Your Spotify access token has expired. Please log in again.</p>
-            <Link to="/" className={cn('btn', styles.back)}>
-              Back to Home
-            </Link>
-          </motion.div>
-        )}
-        {trackInfo && player && deviceID && (
-          <motion.div
-            variants={items}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            className={styles.player}
-          >
-            <WebPlayback
-              track={trackInfo}
-              player={player}
-              play={play}
-              currentTrack={currentTrack}
-              setCurrentTrack={setCurrentTrack}
-              setAutoplayFailed={setAutoplayFailed}
-              is_paused={is_paused}
-              setPaused={setPaused}
-            />
-            <p
-              className={styles.body}
-              onClick={getNewPost}
-              style={{
-                fontSize: body.length > 600 ? '32px' : '48px',
-                ...positions.text,
-              }}
+      {!shown && (
+        <motion.div
+          variants={items}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          className={styles.container}
+          key={clickCount}
+        >
+          {currentTrack && currentTrack.artists ? (
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 2.5 }}
+              className={styles.nameBanner}
             >
-              {body}
-            </p>
-          </motion.div>
-        )}
-      </motion.div>
+              <Marquee speed={150}>
+                <h1>
+                  {currentTrack?.name} - {currentTrack?.artists[0].name}
+                  &nbsp;&nbsp;
+                </h1>
+              </Marquee>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 2.5 }}
+              className={styles.text}
+            >
+              <p>Your Spotify access token has expired. Please log in again.</p>
+              <Link to="/" className={cn('btn', styles.back)}>
+                Back to Home
+              </Link>
+            </motion.div>
+          )}
+          {trackInfo && player && deviceID && (
+            <motion.div
+              variants={items}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              className={styles.player}
+            >
+              <WebPlayback
+                track={trackInfo}
+                player={player}
+                play={play}
+                currentTrack={currentTrack}
+                setCurrentTrack={setCurrentTrack}
+                setAutoplayFailed={setAutoplayFailed}
+                is_paused={is_paused}
+                setPaused={setPaused}
+              />
+              <p
+                className={styles.body}
+                onClick={getNewPost}
+                style={{
+                  fontSize: body.length > 600 ? '32px' : '48px',
+                  ...positions.text,
+                }}
+              >
+                {body}
+              </p>
+            </motion.div>
+          )}
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 }

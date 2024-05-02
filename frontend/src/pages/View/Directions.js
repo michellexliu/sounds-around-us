@@ -1,19 +1,22 @@
 import { motion, AnimatePresence } from 'framer-motion';
 
 import styles from './View.module.css';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../lib/AuthContext';
+import { useTheme } from '../../lib/ThemeContext';
 
 const Directions = () => {
   const { shown, setShown } = useContext(AuthContext);
+  const { randomTheme } = useTheme();
+
+  useEffect(() => {
+    randomTheme();
+  }, []);
 
   return (
     <AnimatePresence mode="wait">
       {shown && (
         <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
           style={{
             position: 'fixed',
             width: '100vw',
@@ -31,7 +34,12 @@ const Directions = () => {
           }}
           onClick={() => setShown(false)}
         >
-          <div style={{ width: '40%' }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2 }}
+            style={{ width: '40%' }}
+          >
             <p className={styles.instructions}>
               Welcome to <i>It's Someone's Favorite Song</i>
             </p>
@@ -45,7 +53,7 @@ const Directions = () => {
             >
               Enter site
             </p>
-          </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
