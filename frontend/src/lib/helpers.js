@@ -1,3 +1,5 @@
+import { BACKEND_ROOT } from './constants';
+
 export const fromMS = (ms) => {
   const d = new Date(Date.UTC(0, 0, 0, 0, 0, 0, ms));
   // Pull out parts of interest
@@ -15,7 +17,7 @@ export const queryString = (params) =>
 
 export const refreshToken = (setToken) => {
   return async function getToken() {
-    const response = await fetch(`http://localhost:3001/auth/token`);
+    const response = await fetch(`${BACKEND_ROOT}/auth/token`);
     const json = await response.json();
     setToken(json.access_token);
   };

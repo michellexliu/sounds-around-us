@@ -3,6 +3,7 @@ import { TypeAnimation } from 'react-type-animation';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import styles from './Login.module.css';
+import { BACKEND_ROOT } from '../../lib/constants';
 
 /**
  * "It's someone's favorite song" is an exploration of the emotional connections we have to music.
@@ -45,10 +46,7 @@ function Login() {
         <div
           className="btn"
           onClick={() => {
-            window.location.href = 'http://localhost:3001/auth/login';
-            // const res = await axios.get('https://localhost:3001/auth/login');
-            // const data = await res.json();
-            // console.log(data);
+            window.location.href = `${BACKEND_ROOT}/auth/login`;
           }}
         >
           Login with Spotify
