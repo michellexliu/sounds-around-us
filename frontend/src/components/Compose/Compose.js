@@ -1,14 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './Compose.module.css';
-import AuthContext from '../../lib/AuthContext';
 import back from '../../assets/back.svg';
 import { BACKEND_ROOT } from '../../lib/constants';
 
 function Compose({ setPost, setStep, song }) {
-  const { token, setToken } = useContext(AuthContext);
   const [body, setBody] = useState('');
   const navigate = useNavigate();
 
@@ -56,7 +54,6 @@ function Compose({ setPost, setStep, song }) {
         <button
           disabled={!body || body === ''}
           className="compose-btn btn btn-primary"
-          type="submit"
           style={{ alignSelf: 'flex-end', marginRight: '0px' }}
           onClick={onClick}
         >
