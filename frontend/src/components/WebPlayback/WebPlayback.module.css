@@ -31,6 +31,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  shape-outside: circle();
 }
 
 .album:hover {

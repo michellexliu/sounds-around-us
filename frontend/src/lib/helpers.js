@@ -22,3 +22,14 @@ export const refreshToken = (setToken) => {
     setToken(json.access_token);
   };
 };
+
+export const getSize = (str) => {
+  if (str == null) return;
+  const length = str.length;
+  console.log(length);
+  if (length <= 100) return 'xs';
+  if (length <= 250) return 'sm';
+  if (length <= 450) return 'md';
+  if (length <= 800) return 'lg';
+  return 'xl';
+};

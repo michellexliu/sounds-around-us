@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import spotify from '../../assets/spotify-logo.png';
 
 import styles from './WebPlayback.module.css';
-import { LAYOUTS } from '../../lib/constants';
+import { SIZES } from '../../lib/constants';
 import { useTheme } from '../../lib/ThemeContext';
 import AuthContext from '../../lib/AuthContext';
 
@@ -14,6 +14,7 @@ function WebPlayback({
   setAutoplayFailed,
   is_paused,
   setPaused,
+  size,
 }) {
   const [is_active, setActive] = useState(false);
   const { positions } = useTheme();
@@ -65,6 +66,7 @@ function WebPlayback({
         className={styles.albumCover}
         src={currentTrack?.album?.images[0].url}
         alt={`album cover for ${currentTrack?.album?.name}`}
+        style={{ width: SIZES[size]?.album, height: SIZES[size]?.album }}
       />
       <img src={spotify} alt={`spotify logo`} className={styles.logo} />
     </div>

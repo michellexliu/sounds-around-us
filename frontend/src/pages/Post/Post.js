@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -8,11 +8,15 @@ import Search from '../../components/Search/Search';
 import Compose from '../../components/Compose/Compose';
 
 function Post() {
-  const { token, setToken } = useContext(AuthContext);
+  const { player } = useContext(AuthContext);
 
   const [step, setStep] = useState('search');
   const [post, setPost] = useState(undefined);
   const [song, setSong] = useState(undefined);
+
+  useEffect(() => {
+    player.togglePlay();
+  }, []);
 
   return (
     <div className={styles.container}>

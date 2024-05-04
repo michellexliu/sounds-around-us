@@ -5,7 +5,7 @@ import Login from './pages/Login/Login';
 import Post from './pages/Post/Post';
 import View from './pages/View/View';
 import AuthContext from './lib/AuthContext';
-import { refreshToken } from './lib/helpers';
+import { getSize, refreshToken } from './lib/helpers';
 import queryString from 'query-string';
 
 import './App.css';
@@ -18,21 +18,25 @@ function App() {
   const [player, setPlayer] = useState(undefined);
   const [deviceID, setDeviceID] = useState(undefined);
   const [theme, setTheme] = useState(undefined);
-  const [layout, setLayout] = useState(0);
+  const [positions, setPositions] = useState(LAYOUTS.md[0]);
   const [shown, setShown] = useState(true);
+  const [body, setBody] = useState(undefined);
+  const [post, setPost] = useState(undefined);
 
   const colorScheme =
     theme == null
       ? { text: 'black', background: 'white' }
       : COLOR_THEMES[theme];
 
-  const positions = LAYOUTS[layout];
-
   const randomTheme = () => {
     const randomIndex = Math.floor(Math.random() * COLOR_THEMES.length);
     setTheme(randomIndex);
-    const randomLayout = Math.floor(Math.random() * LAYOUTS.length);
-    setLayout(randomLayout);
+    const size = getSize(body ?? '');
+    const LAYOUT_CONFIG = LAYOUTS[size];
+    const randomLayout = Math.floor(Math.random() * LAYOUT_CONFIG?.length);
+    console.log(size, randomLayout);
+    const newPositions = LAYOUT_CONFIG[randomLayout];
+    setPositions(newPositions);
   };
 
   const [playbackReady, setPlaybackReady] = useState(false);
@@ -124,6 +128,10 @@ function App() {
           deviceID,
           setDeviceID,
           play,
+          body,
+          setBody,
+          post,
+          setPost,
         }}
       >
         <ThemeContext.Provider

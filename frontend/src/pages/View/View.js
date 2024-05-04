@@ -8,23 +8,22 @@ import Marquee from 'react-fast-marquee';
 import styles from './View.module.css';
 import WebPlayback from '../../components/WebPlayback/WebPlayback';
 import AuthContext from '../../lib/AuthContext';
-import { BACKEND_ROOT, items } from '../../lib/constants';
+import { ASCII_ART, BACKEND_ROOT, SIZES, items } from '../../lib/constants';
 import { useTheme } from '../../lib/ThemeContext';
 import Directions from './Directions';
+import { getSize } from '../../lib/helpers';
 
 function View() {
-  const { token, player, deviceID, shown } = useContext(AuthContext);
+  const { token, player, deviceID, shown, body, setBody, post, setPost } =
+    useContext(AuthContext);
 
-  const [post, setPost] = useState(undefined);
-  const [body, setBody] = useState(undefined);
   const [trackInfo, setTrackInfo] = useState(undefined);
   const [currentTrack, setCurrentTrack] = useState(trackInfo);
   const [autoplayFailed, setAutoplayFailed] = useState(false);
   const [is_paused, setPaused] = useState(false);
   const [clickCount, setClickCount] = useState(true);
 
-  const { randomTheme, positions } = useTheme();
-
+  const { randomTheme, positions, colorScheme } = useTheme();
   // const getToken = () => refreshToken(setToken);
 
   const base = 'https://api.spotify.com/v1/tracks';
@@ -51,8 +50,10 @@ function View() {
     getPost();
   };
 
+  const size = getSize(body);
+
   useEffect(() => {
-    getNewPost();
+    if (post == null) getNewPost();
   }, []);
 
   const play = ({
@@ -77,7 +78,7 @@ function View() {
     if (post && post.length > 0) {
       const { track, body } = post[0];
       setBody(body);
-      console.log(track);
+      console.log(post);
       if (track) {
         getSong(track).then((res) => {
           setTrackInfo(res);
@@ -94,7 +95,6 @@ function View() {
 
   return (
     <AnimatePresence mode="wait" onExitComplete={randomTheme}>
-      {/* <img src={ASCII_ART[0]} alt="music player" className={styles.ascii} /> */}
       <Directions />
       {!shown && (
         <motion.div
@@ -142,6 +142,10 @@ function View() {
               animate="visible"
               exit="hidden"
               className={styles.player}
+              style={{
+                backgroundColor: colorScheme.background,
+                transition: 'background-color 2s',
+              }}
             >
               <WebPlayback
                 track={trackInfo}
@@ -151,17 +155,22 @@ function View() {
                 setAutoplayFailed={setAutoplayFailed}
                 is_paused={is_paused}
                 setPaused={setPaused}
+                size={size}
               />
-              <p
-                className={styles.body}
-                onClick={getNewPost}
-                style={{
-                  fontSize: body.length > 600 ? '32px' : '48px',
-                  ...positions.text,
-                }}
-              >
-                {body}
-              </p>
+              <div className={styles.body} style={positions.text}>
+                <p
+                  onClick={getNewPost}
+                  style={{ fontSize: SIZES[size ?? 'sm']?.text }}
+                >
+                  {body}
+                </p>
+              </div>
+              <img
+                src={ASCII_ART[1]}
+                alt="music player"
+                className={styles.ascii}
+                style={positions.ascii}
+              />
             </motion.div>
           )}
         </motion.div>

@@ -38,16 +38,16 @@ const Directions = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2 }}
-            style={{ width: '40%' }}
+            style={{ width: '60%' }}
           >
             <p className={styles.instructions}>
               <i>It's Someone's Favorite Song</i>
             </p>
             <p className={styles.instructionsSubtitle}>
               Content Warning: Some submisisons may contain references to
-              sensitive topics, such as trauma, suicidal ideation, and sexual
-              assault. If these topics are triggering for you, please proceed
-              with caution.
+              sensitive topics, such as trauma, suicidal ideation, eating
+              disorders, substance abuse, and sexual assault. If these topics
+              are triggering for you, please proceed with caution.
             </p>
             <p
               className={styles.instructionsSubtitle}

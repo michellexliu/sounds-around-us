@@ -56,19 +56,16 @@
 }
 
 .body {
-  padding-left: 4vw;
-  font-size: 2.5em;
   font-family: 'AppleGaramond';
-  width: 75%;
   position: fixed;
-  white-space: pre-line;
-  height: 25vh;
   overflow: auto;
   letter-spacing: 1px;
-  top: 10vh;
-  right: 3vw;
-  padding-right: 20px;
-  text-align: right;
+  display: flex;
+}
+
+.body p {
+  overflow: auto;
+  height: inherit;
 }
 
 .instructions,
@@ -117,9 +114,9 @@
   height: 600px;
   object-fit: contain;
   position: fixed;
-  top: 30%;
-  right: 100px;
-  opacity: 0.3;
+  opacity: 0.7;
+  z-index: -1;
+  mix-blend-mode: soft-light;
 }
 
 @media only screen and (max-width: 768px) {
