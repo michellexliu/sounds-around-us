@@ -23,7 +23,7 @@ function View() {
   const [is_paused, setPaused] = useState(false);
   const [clickCount, setClickCount] = useState(true);
 
-  const { randomTheme, positions, colorScheme } = useTheme();
+  const { randomTheme, positions, colorScheme, asciiIndex } = useTheme();
   // const getToken = () => refreshToken(setToken);
 
   const base = 'https://api.spotify.com/v1/tracks';
@@ -160,13 +160,19 @@ function View() {
               <div className={styles.body} style={positions.text}>
                 <p
                   onClick={getNewPost}
-                  style={{ fontSize: SIZES[size ?? 'sm']?.text }}
+                  style={{
+                    fontSize: SIZES[size ?? 'sm']?.text,
+                    maxHeight:
+                      positions.text.height ??
+                      positions.text.maxHeight ??
+                      'auto',
+                  }}
                 >
                   {body}
                 </p>
               </div>
               <img
-                src={ASCII_ART[1]}
+                src={ASCII_ART[asciiIndex]}
                 alt="music player"
                 className={styles.ascii}
                 style={positions.ascii}

@@ -11,7 +11,7 @@ import queryString from 'query-string';
 import './App.css';
 import Navigation from './components/Navigation';
 import ThemeContext from './lib/ThemeContext';
-import { COLOR_THEMES, LAYOUTS } from './lib/constants';
+import { ASCII_ART, COLOR_THEMES, LAYOUTS } from './lib/constants';
 
 function App() {
   const [token, setToken] = useState(undefined);
@@ -22,6 +22,7 @@ function App() {
   const [shown, setShown] = useState(true);
   const [body, setBody] = useState(undefined);
   const [post, setPost] = useState(undefined);
+  const [asciiIndex, setAsciiIndex] = useState(0);
 
   const colorScheme =
     theme == null
@@ -37,6 +38,8 @@ function App() {
     console.log(size, randomLayout);
     const newPositions = LAYOUT_CONFIG[randomLayout];
     setPositions(newPositions);
+    const ascii = Math.floor(Math.random() * ASCII_ART.length);
+    setAsciiIndex(ascii);
   };
 
   const [playbackReady, setPlaybackReady] = useState(false);
@@ -135,7 +138,14 @@ function App() {
         }}
       >
         <ThemeContext.Provider
-          value={{ theme, setTheme, colorScheme, randomTheme, positions }}
+          value={{
+            theme,
+            setTheme,
+            colorScheme,
+            randomTheme,
+            positions,
+            asciiIndex,
+          }}
         >
           <Navigation />
           <Routes>

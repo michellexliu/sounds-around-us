@@ -65,7 +65,6 @@
 
 .body p {
   overflow: auto;
-  height: inherit;
 }
 
 .instructions,
